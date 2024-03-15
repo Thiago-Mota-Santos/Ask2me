@@ -6,16 +6,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "copy-env": "cp .env.example .env",
+    "relay": "node scripts/generateArtifactDirectory.ts && relay-compiler"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@repo/ui": "*",
     "graphql-ws": "^5.15.0",
     "next": "^14.1.1",
+    "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.0",
     "react-relay": "^16.2.0",
-    "relay-runtime": "^16.2.0"
+    "relay-runtime": "^16.2.0",
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^14.1.1",
