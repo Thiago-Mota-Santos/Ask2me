@@ -27,35 +27,29 @@ export const ProfileType = new GraphQLObjectType<Profile>({
           fields: () => ({
             instagram: {
               type: GraphQLString,
-              resolve: (profile) => profile.socialMedia.instagram,
             },
             whatsapp: {
               type: GraphQLString,
-              resolve: (profile) => profile.socialMedia.whatsapp,
             },
             linkedin: {
               type: GraphQLString,
-              resolve: (profile) => profile.socialMedia.linkedin,
             },
             X: {
               type: GraphQLString,
-              resolve: (profile) => profile.socialMedia.X,
             },
             twitch: {
               type: GraphQLString,
-              resolve: (profile) => profile.socialMedia.twitch,
             },
             youtube: {
               type: GraphQLString,
-              resolve: (profile) => profile.socialMedia.youtube,
             },
           }),
         }),
-        resolve: (profile) => profile.socialMedia,
       },
   }),
   interfaces: () => [nodeInterface],
 })
+
 
 export const ProfileConnection = connectionDefinitions({
   name: 'Profile',

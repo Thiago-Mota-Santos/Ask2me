@@ -26,10 +26,10 @@ const ProfileSchema = new mongoose.Schema<Profile>(
         ref: "User",
         type: Schema.Types.ObjectId
     },
-
     page: {
       type: String,
       required: true,
+      unique: true, 
       min: 3,
       max: 15,
     },
@@ -44,37 +44,41 @@ const ProfileSchema = new mongoose.Schema<Profile>(
       max: 300,
     },
     socialMedia: {
-          instagram: {
-        type: String,
-        required: false,
-      },
-      whatsapp: {
-        type: String,
-        required: false,
-      },
-      linkedin: {
-        type: String,
-        required: false,
-      },
-      X: {
-        type: String,
-        required: false,
-      },
-      twitch: {
-        type: String,
-        required: false,
-      },
-      youtube: {
-        type: String,
-        required: false,
-      },
-    }
+        instagram: {
+          type: String,
+        },
+        whatsapp: {
+          type: String,
+        },
+        linkedin: {
+          type: String,
+        },
+        X: {
+          type: String,
+        },
+        twitch: {
+          type: String,
+        },
+        youtube: {
+          type: String,
+        },
+      }
+      
   },
   {
     collection: 'Profile',
     timestamps: true,
   },
 )
+
+ProfileSchema.pre<Profile>('save', async function (next) {
+    const existingProfile = await ProfileModel.findOne({ page: this.page });
+    if (existingProfile && !existingProfile._id.equals(this._id)) {
+      const error = new Error('Já existe um perfil com esta página.');
+      next(error);
+    } 
+    next()
+});
 
 
 export const ProfileModel = mongoose.model<ProfileDocument>('Profile', ProfileSchema)
