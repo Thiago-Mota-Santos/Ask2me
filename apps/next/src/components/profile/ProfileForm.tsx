@@ -10,7 +10,7 @@ import { ProfileMutation } from "./createProfile";
 import { useMutation } from "react-relay";
 import { createProfileMutation$data } from "../../__generated__/createProfileMutation.graphql";
 import { useRouter } from "next/navigation"
-import { addBar } from "../../utils/addBar";
+import { addBar } from "@/utils/addBar";
 
 const socialMedia = yup.object().shape({
   instagram: yup.string(),

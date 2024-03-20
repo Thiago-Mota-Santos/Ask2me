@@ -1,6 +1,6 @@
 import { Button } from "@repo/ui/button";
 import { Card, CardContent, CardFooter } from "@repo/ui/card";
-import { Avatar, Box, Separator, Text, Textarea } from "@repo/ui/index";
+import { Avatar, Box, Separator, Text } from "@repo/ui/index";
 import Image from "next/image";
 import Link from "next/link";
 import { graphql, useFragment } from "react-relay";
@@ -26,6 +26,8 @@ export default function ProfileInfo ({ profile }: { profile: ProfileInfo_profile
 `,
        profile,
 )
+          console.log(data)
+
     return (
         <Box className="h-screen bg-gray-200 flex items-center justify-center">
             <Card className="w-[800px] bg-gray-100">
