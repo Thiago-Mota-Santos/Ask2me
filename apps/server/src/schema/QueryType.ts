@@ -8,8 +8,9 @@ import { UserLoader } from '../modules/user/userLoader'
 import { ProfileConnection, ProfileType } from '../modules/profile/profileType'
 import { ProfileModel } from '../modules/profile/profileModel'
 import { ProfileLoader } from '../modules/profile/profileLoader'
-import { QuestionType } from '../modules/question/questionType'
+import { QuestionConnection, QuestionType } from '../modules/question/questionType'
 import { QuestionModel } from '../modules/question/questionModel'
+import { QuestionLoader } from '../modules/question/questionLoader'
 
 const appointments: GraphQLFieldConfig<any, any, any> = {
   type: new GraphQLNonNull(AppointmentConnection.connectionType),
@@ -58,6 +59,37 @@ const question: GraphQLFieldConfig<any, any, any> = {
   }
 }
 
+const questions: GraphQLFieldConfig<any, any, any> = {
+  type: new GraphQLNonNull(QuestionConnection.connectionType),
+  args: { 
+    ...connectionArgs
+  },
+  resolve: async (_root, _args, context) => {
+    const user = context.user;
+    if (!user) {
+      throw new Error('User not authenticated');
+    }
+    
+    const userId = user._id;
+    
+    const profile = await ProfileModel.findOne({ profileId: userId });
+
+    if (!profile) {
+      throw new Error('Profile not found');
+    }
+
+    const questions = await QuestionModel.find({ profileId: profile._id });
+
+    const edges = questions.map(question => ({
+      cursor: question._id, 
+      node: question,
+    }));
+
+    return {
+      edges,
+    };
+  }
+};
 
 const me: GraphQLFieldConfig<any, any, any> = {
   type: UserType,
@@ -76,6 +108,7 @@ export const QueryType = new GraphQLObjectType({
     profiles,
     appointments,
     question,
+    questions,
     me,
   }),
 })
