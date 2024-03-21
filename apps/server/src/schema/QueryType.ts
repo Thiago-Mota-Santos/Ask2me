@@ -10,7 +10,6 @@ import { ProfileModel } from '../modules/profile/profileModel'
 import { ProfileLoader } from '../modules/profile/profileLoader'
 import { QuestionConnection, QuestionType } from '../modules/question/questionType'
 import { QuestionModel } from '../modules/question/questionModel'
-import { QuestionLoader } from '../modules/question/questionLoader'
 
 const appointments: GraphQLFieldConfig<any, any, any> = {
   type: new GraphQLNonNull(AppointmentConnection.connectionType),
