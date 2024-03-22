@@ -42,19 +42,38 @@ export interface AppointmentUpdate {
   }
 }
 
-export interface AppointmentMutationResult {
-  appointmentRegisterMutation: {
-    appointmentEdge: {
+export type QuestionMutationResult = {
+  questionCreateMutation: {
+    questionEdge: {
       node: {
-        clientName: string
-        service: string
-        date: string
-        hour: string
-        graphicLocation: string
-      }
-    }
-  }
+        id: string;
+        text: string;
+        page: string
+      };
+    };
+  };
 }
+
+
+export type ProfileMutationResult = {
+  profileRegisterMutation: {
+    profileEdge: {
+      node: {
+        page: string;
+        pixKey: string;
+        description: string;
+        socialMedia: {
+          instagram: string;
+          linkedin: string;
+          X: string;
+          twitch: string;
+          youtube: string;
+        };
+      };
+    };
+  };
+}
+
 
 export interface getAppointment {
   appointments: {
