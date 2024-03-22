@@ -11,12 +11,6 @@ import { ProfileLoader } from '../modules/profile/profileLoader'
 import { QuestionConnection, QuestionType } from '../modules/question/questionType'
 import { QuestionModel } from '../modules/question/questionModel'
 
-const appointments: GraphQLFieldConfig<any, any, any> = {
-  type: new GraphQLNonNull(AppointmentConnection.connectionType),
-  args: { ...connectionArgs },
-  resolve: async (_root, _args, context) =>
-    await AppointmentLoader.loadAll(context, _args),
-}
 
 const profiles: GraphQLFieldConfig<any, any, any> = {
   type: new GraphQLNonNull(ProfileConnection.connectionType),
@@ -78,7 +72,7 @@ const questions: GraphQLFieldConfig<any, any, any> = {
     }
 
     const questions = await QuestionModel.find({ profileId: profile._id });
-
+     
     const edges = questions.map(question => ({
       cursor: question._id, 
       node: question,
@@ -89,6 +83,7 @@ const questions: GraphQLFieldConfig<any, any, any> = {
     };
   }
 };
+
 
 const me: GraphQLFieldConfig<any, any, any> = {
   type: UserType,
@@ -105,7 +100,6 @@ export const QueryType = new GraphQLObjectType({
     nodes: nodesField,
     profile,
     profiles,
-    appointments,
     question,
     questions,
     me,
