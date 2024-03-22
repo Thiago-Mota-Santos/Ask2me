@@ -1,15 +1,19 @@
 interface DataLoaders {
   UserLoader: ReturnType<
-    typeof import('../user/UserLoader').UserLoader.getLoader
+    typeof import('../user/userLoader').UserLoader.getLoader
   >
   AppointmentLoader: ReturnType<
-    typeof import('../appointment/AppointmentLoader').AppointmentLoader.getLoader
+    typeof import('../appointment/appointmentLoader').AppointmentLoader.getLoader
+  >
+  ProfileLoader: ReturnType<
+    typeof import('../profile/profileLoader').ProfileLoader.getLoader
+  >
+  QuestionLoader: ReturnType<
+    typeof import('../question/questionLoader').QuestionLoader.getLoader
   >
 }
 
-type Loaders =
-  | { [Name in keyof DataLoaders]: () => DataLoaders[Name] }
-  | Record<string, () => unknown>
+type Loaders = { [Name in keyof DataLoaders]: () => DataLoaders[Name] } | Record<string, () => unknown>;
 
 const loaders: Loaders = {}
 
@@ -20,7 +24,9 @@ const registerLoader = <Name extends keyof DataLoaders>(
   loaders[key] = getLoader
 }
 
+
 const getDataLoaders = (): DataLoaders =>
+
   (Object.keys(loaders) as (keyof DataLoaders)[]).reduce(
     (prev, loaderKey) => ({
       ...prev,
@@ -28,6 +34,7 @@ const getDataLoaders = (): DataLoaders =>
     }),
     {},
   ) as DataLoaders
+
 
 export type { DataLoaders }
 export { registerLoader, getDataLoaders }
