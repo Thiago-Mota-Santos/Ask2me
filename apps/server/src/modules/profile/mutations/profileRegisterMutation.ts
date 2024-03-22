@@ -1,7 +1,7 @@
 import { GraphQLContext } from '../../../graphql/context'
 import { GraphQLInputObjectType, GraphQLNonNull, GraphQLString } from 'graphql'
 import { mutationWithClientMutationId, toGlobalId } from 'graphql-relay'
-import { ProfileType } from '../profileType'
+import { ProfileConnection } from '../profileType'
 import { Profile, ProfileModel } from '../profileModel'
 import { successField } from '@entria/graphql-mongo-helpers'
 import { ProfileLoader } from '../profileLoader'
@@ -17,7 +17,6 @@ const profileRegisterMutation = mutationWithClientMutationId({
         name: 'SocialMediaInput',
         fields: {
           instagram: { type: GraphQLString },
-          whatsapp: { type: GraphQLString },
           linkedin: { type: GraphQLString },
           X: { type: GraphQLString },
           twitch: { type: GraphQLString },
@@ -47,13 +46,19 @@ const profileRegisterMutation = mutationWithClientMutationId({
     }
   },
   outputFields: {
-    profile: {
-      type: ProfileType,
+    profileEdge: {
+      type: ProfileConnection.edgeType,
       resolve: async ({ id }, _, context) => {
-        return ProfileLoader.load(context, id);
+        const profile = await ProfileLoader.load(context, id)
+        if (!profile) return null
+
+        return {
+          cursor: toGlobalId('Profile', profile._id),
+          node: profile,
+        }
       },
+      ...successField,
     },
-    ...successField,
   },
 })
 

@@ -16,12 +16,11 @@ it('should be able create an user profile', async () => {
   const user = await createUser()
   const { page, description, pixKey, socialMedia } =
     await createProfile({
-      page: 'Thiago',
+      page: 'xx',
       pixKey: "31314104194184184818481481",
       description: "Responderei qualquer pergunta",
       socialMedia: {
       instagram: "thiagoinsta@313",
-      whatsapp: "(00) 00000 - 0000",
       linkedin: "thiago_dev",
       X: "Teaga014",
       twitch: "thiagodev",
@@ -49,7 +48,6 @@ it('should be able create an user profile', async () => {
             description
             socialMedia {
                 instagram
-                whatsapp
                 linkedin
                 X
                 twitch
@@ -83,7 +81,6 @@ it('should be able create an user profile', async () => {
   expect(profileEdge.node.description).toBe(variableValues.description);
 
   expect(profileEdge.node.socialMedia.instagram).toBe(variableValues.socialMedia.instagram);
-  expect(profileEdge.node.socialMedia.whatsapp).toBe(variableValues.socialMedia.whatsapp);
   expect(profileEdge.node.socialMedia.linkedin).toBe(variableValues.socialMedia.linkedin);
   expect(profileEdge.node.socialMedia.X).toBe(variableValues.socialMedia.X);
   expect(profileEdge.node.socialMedia.twitch).toBe(variableValues.socialMedia.twitch);

@@ -47,9 +47,6 @@ const ProfileSchema = new mongoose.Schema<Profile>(
         instagram: {
           type: String,
         },
-        whatsapp: {
-          type: String,
-        },
         linkedin: {
           type: String,
         },

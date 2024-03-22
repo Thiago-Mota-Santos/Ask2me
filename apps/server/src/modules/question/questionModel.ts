@@ -2,7 +2,9 @@ import mongoose, { Document, Types, Schema } from 'mongoose'
 import { Maybe } from '../../../../../packages/types/src/Maybe'
 
 export type Question = {
+  page: string
   text: string
+  answer: string
   createdAt: Date
   profileId: Types.ObjectId
   _id: Types.ObjectId
@@ -17,9 +19,15 @@ const QuestionSchema = new mongoose.Schema<Question>(
         type: Schema.Types.ObjectId
     },
     text: {
+       required: true,
        type: String,
-       required: true
     },
+    answer: {
+      type: String,
+    },
+    page: {
+      type: String
+    }
   },
   {
     collection: 'Question',
