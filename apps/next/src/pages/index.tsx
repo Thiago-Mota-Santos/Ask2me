@@ -1,40 +1,46 @@
 import { graphql, usePreloadedQuery, PreloadedQuery } from "react-relay";
 import { GetServerSideProps } from 'next';
-import DashboardHeader from "@/components/DashboardHeader";
 import ProfileInfo from "@/components/ProfileInfo";
 import { getCookie } from "@/utils/getToken";
+import pageQuery, { pagesQuery as pageQueryType } from "@/__generated__/pagesQuery.graphql";
+import ProfileForm from "@/components/profile/ProfileForm";
 import { getPreloadedQuery } from "@/relay/network";
-import pagesQuery, { pagesQuery as pageQueryType } from "@/__generated__/pagesQuery.graphql";
+import RootLayoutQuery,{ RootLayoutQuery as RootLayoutQueryType } from "@/__generated__/RootLayoutQuery.graphql";
+import RootLayout from "@/layouts/RootLayout";
+import { NextPageWithLayout } from '../relay/ReactRelayContainer'
+
 
 type HomeProps = {
-  preloadedQuery: PreloadedQuery<pageQueryType>;
+  queryRefs: {
+    pageQuery: PreloadedQuery<pageQueryType>
+    rootLayoutQuery: PreloadedQuery<RootLayoutQueryType>;
+  }
 }
 
-export default function Home({ preloadedQuery }: HomeProps) {
-  const data = usePreloadedQuery(
-    graphql`
-      query pagesQuery {
-        profile {
-          ...ProfileInfo_profile
-        }
-      }
-    `,
-    preloadedQuery
-  );
 
+const Profile = graphql`
+  query pagesQuery {
+    profile {
+      ...ProfileInfo_profile
+    }
+  }
+
+`;
+
+const Home: NextPageWithLayout<HomeProps> = ({ queryRefs }) => {
+  const data = usePreloadedQuery(Profile, queryRefs.pageQuery);
   const { profile } = data;
 
   return (
-     <div className="h-screen bg-gray-100">
-        <DashboardHeader hasArrow/>
-        <div className="flex items-center mt-8 justify-center">
-            <ProfileInfo profile={profile!} />
-        
-        {/* <ProfileForm/> */}
-        </div>
-     </div>
-  )
+      <> 
+        {profile ? <ProfileInfo profile={profile} /> : <ProfileForm />}
+      </>
+  );
 }
+
+Home.getLayout = page => {
+  return <RootLayout queryRef={page.props.queryRefs.rootLayoutQuery}>{page}</RootLayout>;
+};
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const token = getCookie(ctx.req.headers);
@@ -42,17 +48,21 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     return {
       redirect: {
         permanent: false,
-        destination: '/auth/signin',
+        destination: '/auth/register',
       },
       props: {},
     };
   }
-
+ 
   return {
     props: {
       preloadedQueries: {
-        pageQuery: await getPreloadedQuery(pagesQuery, {}, token),
+        pageQuery: await getPreloadedQuery(pageQuery, {}, token),
+        rootLayoutQuery: await getPreloadedQuery(RootLayoutQuery, {}, token),
       },
     },
-  }
+  };
 };
+
+export default Home
+
