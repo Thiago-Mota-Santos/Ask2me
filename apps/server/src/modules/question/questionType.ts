@@ -13,6 +13,14 @@ export const QuestionType = new GraphQLObjectType<Question>({
       type: new GraphQLNonNull(GraphQLString),
       resolve: (question) => question.text,
     },
+    answer: {
+      type: GraphQLString,
+      resolve: (question) => question.answer, 
+    },
+    page: {
+      type: GraphQLString,
+      resolve: (question) => question.page
+    }
   }),
   interfaces: () => [nodeInterface],
 })
