@@ -28,9 +28,6 @@ export const ProfileType = new GraphQLObjectType<Profile>({
             instagram: {
               type: GraphQLString,
             },
-            whatsapp: {
-              type: GraphQLString,
-            },
             linkedin: {
               type: GraphQLString,
             },
