@@ -33,7 +33,7 @@ export default function ProfileInfo({ profile }: { profile: ProfileInfo_profile$
       if (link && link.trim() !== '') {
         const iconSrc = `/social/${socialNetwork}.svg`;
         socialMediaIcons.push(
-          <Link key={socialNetwork} target="_blank" href={`https://${link}`} className="rounded-full p-2 hover:bg-gray-200">
+          <Link key={socialNetwork} target="_blank" href={`${link}`} className="rounded-full p-2 hover:bg-gray-200">
             <Image
               src={iconSrc}
               alt={`Icone da rede social ${socialNetwork}`}

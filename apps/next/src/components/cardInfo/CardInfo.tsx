@@ -80,8 +80,7 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
           toast(`Profile created`, {
               description: "Wait for your question to be answered",
           })
-          router.push(`http://localhost:3000/${path}/${questionId}`) 
-          // add url vercel
+          router.push(`/${path}/${questionId}`) 
         },
       });
     }

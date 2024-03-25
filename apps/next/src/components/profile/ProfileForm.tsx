@@ -62,9 +62,7 @@ export default function ProfileForm () {
         toast(`Profile created`, {
             description: "You can receive some questions now",
         })
-        router.push(`http://localhost:3000/${page}`);
-        
-        // add url vercel
+        router.push(`/${page}`);
       },
     });
   }
