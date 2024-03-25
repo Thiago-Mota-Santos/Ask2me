@@ -55,7 +55,7 @@ export default function Questionlist({ questions }: { questions: QuestionList_qu
             <Box className="flex flex-col gap-y-1">
             {data?.edges?.map(edge => (
                 <>
-                 <Link target="_blank" href={`${edge?.node?.page}/${edge?.node?.id}`}>
+                 <Link key={edge?.node?.id} target="_blank" href={`${edge?.node?.page}/${edge?.node?.id}`}>
                  <Text className="hover:underline">
                      {edge?.node?.text}
                  </Text>
