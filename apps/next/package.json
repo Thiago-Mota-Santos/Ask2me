@@ -33,7 +33,7 @@
     "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
-    "@types/react-relay": "^16.2.0",
+    "@types/react-relay": "^16.0.6",
     "@types/relay-runtime": "^14.1.23",
     "autoprefixer": "^10.4.18",
     "eslint": "^8.57.0",
