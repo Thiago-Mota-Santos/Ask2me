@@ -13,8 +13,10 @@
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
     "@repo/ui": "*",
+    "@vercel/og": "^0.6.2",
     "autoprefixer": "^10.4.18",
     "graphql-ws": "^5.15.0",
+    "html-to-image": "^1.11.11",
     "lucide-react": "^0.358.0",
     "next": "^14.1.1",
     "nookies": "^2.5.2",
