@@ -22,8 +22,8 @@ it('Should create user', async () => {
   }
 `
   const variableValues = {
-    username: 'joão',
-    email: 'joao@email.com',
+    username: 'test123',
+    email: 'test123.com',
     password: 's313s18747s41',
   }
 

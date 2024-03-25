@@ -1,6 +1,6 @@
-import { Maybe } from '@fullstack/types'
+import { Maybe } from '../../../packages/types/src'
 import { getDataLoaders } from './modules/loader/loaderRegister'
-import { UserDocument } from './modules/user/UserModel'
+import { UserDocument } from './modules/user/userModel'
 import { ParameterizedContext } from 'koa'
 
 interface ContextVars {

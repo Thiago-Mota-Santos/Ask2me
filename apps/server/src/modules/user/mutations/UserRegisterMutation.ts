@@ -1,11 +1,10 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { successField } from '@entria/graphql-mongo-helpers'
-import { UserType } from '../UserType'
-import { UserModel } from '../UserModel'
 import { generateJwtToken } from '../../../auth'
-import { GraphQLContext } from '../../../graphql/context'
-import { UserLoader } from '../UserLoader'
+import { UserModel } from '../userModel'
+import { UserType } from '../userType'
+import { UserLoader } from '../userLoader'
 
 const userRegisterMutation = mutationWithClientMutationId({
   name: 'UserRegister',
