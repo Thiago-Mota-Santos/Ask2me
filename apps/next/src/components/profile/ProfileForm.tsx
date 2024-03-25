@@ -1,7 +1,7 @@
+import * as yup from 'yup';
 import { Button } from "@repo/ui/button";
 import { Form, toast } from "@repo/ui/index";
 import { Input } from "@repo/ui/input";
-import * as yup from 'yup';
 
 import Image from "next/image";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,7 +14,6 @@ import { addBar } from "@/utils/addBar";
 
 const socialMedia = yup.object().shape({
   instagram: yup.string(),
-  whatsapp: yup.string(),
   linkedin: yup.string(),
   X: yup.string(),
   twitch: yup.string(),
@@ -29,11 +28,12 @@ const schema = yup.object({
 });
 
 
+
 const resolver = yupResolver(schema);
 
 type FormValues = yup.InferType<typeof schema>;
 
-export default function ProfileForm() {
+export default function ProfileForm () {
   const router = useRouter()
   const { register, handleSubmit } = useForm<FormValues>({
     resolver,
@@ -42,6 +42,7 @@ export default function ProfileForm() {
   const [request] = useMutation(ProfileMutation)
 
   function onSubmit(form: FormValues) {
+
     request({
       variables: {
         page: addBar(form.page),
@@ -133,24 +134,9 @@ export default function ProfileForm() {
               type="text"
               id="instagram"
               className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-8/12 p-2.5`}
-              placeholder="@seuarroba"
+              placeholder="adicione o link"
               {...register("socialMedia.instagram")}
 
-            />
-          </div>
-          <div className="flex gap-2">
-            <Image
-              src="/social/whatsapp.svg"
-              alt="Social media icone"
-              width={32}
-              height={32}
-            />
-            <Input
-              type="text"
-              id="zap"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-8/12 p-2.5`}
-              placeholder="Seu número de telefone"
-              {...register("socialMedia.whatsapp")}
             />
           </div>
           <div className="flex gap-2">
@@ -164,12 +150,12 @@ export default function ProfileForm() {
               type="text"
               id="linkedin"
               className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-8/12 p-2.5`}
-              placeholder="@seuarroba"
+              placeholder="adicione o link"
             />
           </div>
           <div className="flex gap-2">
             <Image
-              src="/social/x.svg"
+              src="/social/X.svg"
               alt="Social media icone"
               width={32}
               height={32}
@@ -178,7 +164,7 @@ export default function ProfileForm() {
               type="text"
               id="x"
               className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-8/12 p-2.5`}
-              placeholder="@seuarroba"
+              placeholder="adicione o link"
               {...register("socialMedia.X")}
             />
           </div>
@@ -193,7 +179,7 @@ export default function ProfileForm() {
               type="text"
               id="twitch"
               className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-8/12 p-2.5`}
-              placeholder="@seuarroba"
+              placeholder="adicione o link"
               {...register("socialMedia.twitch")}
             />
           </div>
@@ -208,7 +194,7 @@ export default function ProfileForm() {
               type="text"
               id="youtube"
               className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-8/12 p-2.5`}
-              placeholder="@seucanal"
+              placeholder="adicione o link"
               {...register("socialMedia.youtube")}
             />
           </div>

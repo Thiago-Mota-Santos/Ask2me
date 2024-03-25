@@ -11,10 +11,11 @@ interface HeaderProps {
 
 export default function DashboardHeader({ hasArrow = false }: HeaderProps) {
   const router = useRouter();
+
   return (
     <Box className="flex items-center bg-white p-2 mr-2 justify-between">
       <button
-        onClick={() => router.push('/dashboard')}
+        onClick={() => router.push('/')}
         className="ml-8 hidden md:block hover:pointer"
       >
         {hasArrow ? <ArrowLeft /> : null}
@@ -31,7 +32,7 @@ export default function DashboardHeader({ hasArrow = false }: HeaderProps) {
           />
         </Link>
       </div>
-
+ 
       <Flex gap="1" ml="3" align="start">
         <AvatarMenuBar />
       </Flex>

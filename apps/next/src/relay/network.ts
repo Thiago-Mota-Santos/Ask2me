@@ -8,7 +8,7 @@ import { Network, QueryResponseCache } from 'relay-runtime'
 
 const ONE_MINUTE_IN_MS = 60 * 1000
 
-const GRAPHQL_ENPOINT = process.env.NEXT_PUBLIC_API_SERVER as string
+const GRAPHQL_ENPOINT = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT as string
 
 export function createNetwork() {
   const responseCache = new QueryResponseCache({
@@ -53,7 +53,7 @@ async function networkFetch(
   headers?: HeadersInit,
 ) {
   // Fetch data from GitHub's GraphQL API:
-  const response = await fetch(`${GRAPHQL_ENPOINT}/graphql`, {
+  const response = await fetch(GRAPHQL_ENPOINT, {
     method: 'POST',
     credentials: 'include',
     headers: {

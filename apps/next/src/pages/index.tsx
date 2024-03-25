@@ -3,17 +3,17 @@ import { GetServerSideProps } from 'next';
 import ProfileInfo from "@/components/ProfileInfo";
 import { getCookie } from "@/utils/getToken";
 import pageQuery, { pagesQuery as pageQueryType } from "@/__generated__/pagesQuery.graphql";
-import ProfileForm from "@/components/profile/ProfileForm";
 import { getPreloadedQuery } from "@/relay/network";
-import RootLayoutQuery,{ RootLayoutQuery as RootLayoutQueryType } from "@/__generated__/RootLayoutQuery.graphql";
-import RootLayout from "@/layouts/RootLayout";
+import rootLayoutQuery, { rootLayoutQuery as rootLayoutQueryType } from "@/__generated__/rootLayoutQuery.graphql";
 import { NextPageWithLayout } from '../relay/ReactRelayContainer'
-
+import RootLayout from "@/layouts/rootLayout";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 type HomeProps = {
   queryRefs: {
     pageQuery: PreloadedQuery<pageQueryType>
-    rootLayoutQuery: PreloadedQuery<RootLayoutQueryType>;
+    rootLayoutQuery: PreloadedQuery<rootLayoutQueryType>;
   }
 }
 
@@ -23,23 +23,46 @@ const Profile = graphql`
     profile {
       ...ProfileInfo_profile
     }
+    questions {
+    ...QuestionList_question
   }
-
+}
 `;
 
+
+
 const Home: NextPageWithLayout<HomeProps> = ({ queryRefs }) => {
+  const router = useRouter()
   const data = usePreloadedQuery(Profile, queryRefs.pageQuery);
   const { profile } = data;
+  // TODO: find best form to make this redirect
+
+  // if(!profile){
+    // router.push('/create')
+  // }
+
+  // https://nextjs.org/docs/messages/no-router-instance
+  
+  useEffect(() => {
+    if(!profile){
+      router.push("/create")
+      return
+    }
+  },[])
+  
+
+  if(!profile) {
+    return null
+  }
 
   return (
-      <> 
-        {profile ? <ProfileInfo profile={profile} /> : <ProfileForm />}
-      </>
+     <ProfileInfo profile={profile} />
   );
 }
 
 Home.getLayout = page => {
   return <RootLayout queryRef={page.props.queryRefs.rootLayoutQuery}>{page}</RootLayout>;
+  
 };
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
@@ -58,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     props: {
       preloadedQueries: {
         pageQuery: await getPreloadedQuery(pageQuery, {}, token),
-        rootLayoutQuery: await getPreloadedQuery(RootLayoutQuery, {}, token),
+        rootLayoutQuery: await getPreloadedQuery(pageQuery, {}, token),
       },
     },
   };
