@@ -20,10 +20,10 @@ with this project it should be possible for any user to create an account and be
 
 ## Requirements
 
-- [ ] - It must be possible to create a question for a specific user.
+- [x] - It must be possible to create a question for a specific user.
 - [ ] - There should be a list of questions (general) where clicking on them will lead to a specific user with the question and answer.
-- [ ] - There should be a list of questions (only for the recipient of the questions).
-- [ ] - Questions should be received in real-time.
+- [x] - There should be a list of questions (only for the recipient of the questions).
+- [x] - Questions should be received in real-time.
 - [ ] - Questions with the highest PIX value deposited should be prioritized and placed at the top of the queue.
 
 ## What's inside?
