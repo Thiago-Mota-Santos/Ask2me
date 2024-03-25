@@ -39,12 +39,8 @@ const question: GraphQLFieldConfig<any, any, any> = {
     ...connectionArgs
    },
   
-  resolve: async (_root, { profileId }, context) => {
-    const user = context.user;
-    if (!user) {
-      throw new Error('User not authenticated');
-    }
-
+  resolve: async (_root, { profileId }, __) => {
+  
     const id = getObjectId(profileId)
     const questions = await QuestionModel.findOne({ _id: id });
     return questions;
