@@ -1,27 +1,55 @@
+import { fetchGraphQL } from '@/relay/environment';
 import { ImageResponse } from '@vercel/og';
+import { NextApiRequest } from 'next';
  
 export const config = {
   runtime: 'edge',
 };
  
-export default async function handler() {
+export default async function (req: NextApiRequest) {
+  const { profileId } = req.query 
+  const result = await fetchGraphQL(
+      `
+      query($profileId: String!) {
+        question(profileId: $profileId) {
+          text
+          page
+        }
+      }
+      
+      `,
+      {profileId},
+    );
+
+
   return new ImageResponse(
     (
       <div
         style={{
-          fontSize: 40,
-          color: 'black',
-          background: 'white',
-          width: '100%',
           height: '100%',
-          padding: '50px 200px',
-          textAlign: 'center',
-          justifyContent: 'center',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
           alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'white',
         }}
       >
-        👋 Hello 你好 नमस्ते こんにちは สวัสดีค่ะ 안녕 добрий день Hallá
+       <div tw="flex h-screen items-center justify-center">
+        <div tw="flex flex-col items-center justify-center max-h-80 bg-gray-200">
+          <div tw="flex mt-1">
+            <span tw="text-orange-500 font-bold text-2xl">Pergunta</span>
+          </div>
+          <div tw="flex p-8 pt-2">
+            <span tw="font-bold">{result.data.question.text}</span>
+          </div>
+          <div tw="flex flex-col items-center justify-center p-2 bg-orange-500 w-full">
+            <span tw="text-white">Faça uma pergunta também!</span>
+            <span tw="text-sm font-bold text-white">{`ask2me-next.vercel.app${result.data.question.page}`}</span>
+          </div>
+        </div>
       </div>
+     </div>
     ),
     {
       width: 1200,
