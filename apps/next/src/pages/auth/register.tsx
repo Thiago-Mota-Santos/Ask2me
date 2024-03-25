@@ -20,6 +20,8 @@ import { useForm } from 'react-hook-form';
 import { registerMutation$data,  } from '../../__generated__/registerMutation.graphql'
 import { RegisterMutation } from '@/components/auth/mutation/register';
 import { AuthContext } from '@/context/AuthContext';
+import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
 
 const schema = yup.object({
     email: yup.string().email('Invalid email address').required('Required').trim(),
@@ -41,7 +43,6 @@ export default function Register() {
   const [request] = useMutation(RegisterMutation);
 
   function onSubmit({ email, password, username }: FormValues) {
-    console.log(email, password, username);
     request({
       variables: {
         email,
@@ -61,7 +62,7 @@ export default function Register() {
             description: "Try to login now!",
         })
         signIn(token);
-        router.push("/auth/login");
+        router.push("/create");
       },
     });
   }
@@ -209,4 +210,21 @@ export default function Register() {
     </div>
   </main>
   )
+}
+
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'token': token } = parseCookies(ctx)
+  if (token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

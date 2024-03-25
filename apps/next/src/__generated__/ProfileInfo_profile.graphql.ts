@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eeee3828aab2a7a2325b5dc9b6b83a91>>
+ * @generated SignedSource<<b5cae01aa0acd3765a73f8d225efd636>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,6 @@ export type ProfileInfo_profile$data = {
     readonly instagram: string | null | undefined;
     readonly linkedin: string | null | undefined;
     readonly twitch: string | null | undefined;
-    readonly whatsapp: string | null | undefined;
     readonly youtube: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "ProfileInfo_profile";
@@ -75,13 +74,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "whatsapp",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "linkedin",
           "storageKey": null
         },
@@ -114,6 +106,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1c9c2505735e5122cf9f7587da333c3a";
+(node as any).hash = "29bed10b974a9959bca35ac53b35457f";
 
 export default node;

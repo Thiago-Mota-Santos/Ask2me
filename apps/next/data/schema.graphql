@@ -12,7 +12,9 @@ type Query {
     ids: [ID!]!
   ): [Node]!
   profile: Profile
-  appointments(after: String, first: Int, before: String, last: Int): AppointmentConnection!
+  profiles(after: String, first: Int, before: String, last: Int): ProfileConnection!
+  question(profileId: String!, after: String, first: Int, before: String, last: Int): Question
+  questions(after: String, first: Int, before: String, last: Int): QuestionConnection!
 
   """user logged"""
   me: User
@@ -36,7 +38,6 @@ type Profile implements Node {
 
 type SocialMedia {
   instagram: String
-  whatsapp: String
   linkedin: String
   X: String
   twitch: String
@@ -44,12 +45,12 @@ type SocialMedia {
 }
 
 """A connection to a list of items."""
-type AppointmentConnection {
+type ProfileConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [AppointmentEdge]
+  edges: [ProfileEdge]
 }
 
 """Information about pagination in a connection."""
@@ -68,23 +69,39 @@ type PageInfo {
 }
 
 """An edge in a connection."""
-type AppointmentEdge {
+type ProfileEdge {
   """The item at the end of the edge"""
-  node: Appointment
+  node: Profile
 
   """A cursor for use in pagination"""
   cursor: String!
 }
 
-"""Represent an Appointment list"""
-type Appointment implements Node {
+"""Represents a question asked"""
+type Question implements Node {
   """The ID of an object"""
   id: ID!
-  clientName: String!
-  service: String!
-  date: String!
-  hour: String!
-  graphicLocation: String!
+  text: String!
+  answer: String
+  page: String
+}
+
+"""A connection to a list of items."""
+type QuestionConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [QuestionEdge]
+}
+
+"""An edge in a connection."""
+type QuestionEdge {
+  """The item at the end of the edge"""
+  node: Question
+
+  """A cursor for use in pagination"""
+  cursor: String!
 }
 
 """Represents an authenticating user"""
@@ -102,10 +119,9 @@ type Mutation {
 
   """Register a new user"""
   userRegisterMutation(input: UserRegisterInput!): UserRegisterPayload
-  appointmentRegisterMutation(input: AppointmentRegisterInput!): AppointmentRegisterPayload
-  AppointmentDelete(input: AppointmentDeleteInput!): AppointmentDeletePayload
-  appointmentUpdateMutation(input: AppointmentUpdateInput!): AppointmentUpdatePayload
   profileRegisterMutation(input: ProfileRegisterMutationInput!): ProfileRegisterMutationPayload
+  questionCreateMutation(input: QuestionCreateMutationInput!): QuestionCreateMutationPayload
+  answerRegisterMutation(input: AnswerRegisterMutationInput!): AnswerRegisterMutationPayload
 }
 
 type UserLoginMutationPayload {
@@ -139,60 +155,9 @@ input UserRegisterInput {
   clientMutationId: String
 }
 
-type AppointmentRegisterPayload {
-  appointmentEdge: AppointmentEdge
-  clientMutationId: String
-}
-
-input AppointmentRegisterInput {
-  clientName: String!
-  date: String!
-  hour: String!
-  graphicLocation: String!
-  service: String!
-  clientMutationId: String
-}
-
-type AppointmentDeletePayload {
-  appointmentId: ID
-
-  """Default success field resolver."""
-  success: String
-  clientMutationId: String
-}
-
-input AppointmentDeleteInput {
-  AppointmentId: String!
-  clientMutationId: String
-}
-
-type AppointmentUpdatePayload {
-  appointmentEdge: AppointmentEdge
-  clientMutationId: String
-}
-
-input AppointmentUpdateInput {
-  appointmentId: String!
-  clientName: String!
-  date: String!
-  hour: String!
-  graphicLocation: String!
-  service: String!
-  clientMutationId: String
-}
-
 type ProfileRegisterMutationPayload {
   profileEdge: ProfileEdge
   clientMutationId: String
-}
-
-"""An edge in a connection."""
-type ProfileEdge {
-  """The item at the end of the edge"""
-  node: Profile
-
-  """A cursor for use in pagination"""
-  cursor: String!
 }
 
 input ProfileRegisterMutationInput {
@@ -205,9 +170,31 @@ input ProfileRegisterMutationInput {
 
 input SocialMediaInput {
   instagram: String
-  whatsapp: String
   linkedin: String
   X: String
   twitch: String
   youtube: String
+}
+
+type QuestionCreateMutationPayload {
+  questionEdge: QuestionEdge
+  clientMutationId: String
+}
+
+input QuestionCreateMutationInput {
+  text: String!
+  profileId: String!
+  page: String
+  clientMutationId: String
+}
+
+type AnswerRegisterMutationPayload {
+  questionEdge: QuestionEdge
+  clientMutationId: String
+}
+
+input AnswerRegisterMutationInput {
+  answer: String!
+  profileId: String!
+  clientMutationId: String
 }

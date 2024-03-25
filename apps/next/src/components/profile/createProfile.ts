@@ -20,7 +20,6 @@ const ProfileMutation = graphql`
         description
         socialMedia {
             instagram
-            whatsapp
             linkedin
             X
             twitch

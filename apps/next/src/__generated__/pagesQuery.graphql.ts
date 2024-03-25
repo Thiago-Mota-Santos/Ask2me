@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f125c56ce6ff09ed0dc2c2fa1a1aa94>>
+ * @generated SignedSource<<af9d0454967ebd6859aabeabb23a0cf7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,23 +10,41 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type dashboardQuery$variables = Record<PropertyKey, never>;
-export type dashboardQuery$data = {
+export type pagesQuery$variables = Record<PropertyKey, never>;
+export type pagesQuery$data = {
   readonly profile: {
     readonly " $fragmentSpreads": FragmentRefs<"ProfileInfo_profile">;
   } | null | undefined;
+  readonly questions: {
+    readonly " $fragmentSpreads": FragmentRefs<"QuestionList_question">;
+  };
 };
-export type dashboardQuery = {
-  response: dashboardQuery$data;
-  variables: dashboardQuery$variables;
+export type pagesQuery = {
+  response: pagesQuery$data;
+  variables: pagesQuery$variables;
 };
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "page",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "dashboardQuery",
+    "name": "pagesQuery",
     "selections": [
       {
         "alias": null,
@@ -43,6 +61,22 @@ const node: ConcreteRequest = {
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "QuestionConnection",
+        "kind": "LinkedField",
+        "name": "questions",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "QuestionList_question"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -52,7 +86,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "dashboardQuery",
+    "name": "pagesQuery",
     "selections": [
       {
         "alias": null,
@@ -62,13 +96,7 @@ const node: ConcreteRequest = {
         "name": "profile",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "page",
-            "storageKey": null
-          },
+          (v0/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -102,13 +130,6 @@ const node: ConcreteRequest = {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "whatsapp",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
                 "name": "linkedin",
                 "storageKey": null
               },
@@ -136,11 +157,54 @@ const node: ConcreteRequest = {
             ],
             "storageKey": null
           },
+          (v1/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "QuestionConnection",
+        "kind": "LinkedField",
+        "name": "questions",
+        "plural": false,
+        "selections": [
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "QuestionEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Question",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v0/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "text",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "answer",
+                    "storageKey": null
+                  },
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -149,15 +213,16 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "579c1701a567601e8aee9953a8d35789",
+    "cacheID": "78dbfc168617c9ab188a7947fff10115",
     "id": null,
     "metadata": {},
-    "name": "dashboardQuery",
+    "name": "pagesQuery",
     "operationKind": "query",
-    "text": "query dashboardQuery {\n  profile {\n    ...ProfileInfo_profile\n    id\n  }\n}\n\nfragment ProfileInfo_profile on Profile {\n  page\n  pixKey\n  description\n  socialMedia {\n    instagram\n    whatsapp\n    linkedin\n    X\n    twitch\n    youtube\n  }\n}\n"
+    "text": "query pagesQuery {\n  profile {\n    ...ProfileInfo_profile\n    id\n  }\n  questions {\n    ...QuestionList_question\n  }\n}\n\nfragment ProfileInfo_profile on Profile {\n  page\n  pixKey\n  description\n  socialMedia {\n    instagram\n    linkedin\n    X\n    twitch\n    youtube\n  }\n}\n\nfragment QuestionList_question on QuestionConnection {\n  edges {\n    node {\n      page\n      text\n      answer\n      id\n    }\n  }\n}\n"
   }
 };
+})();
 
-(node as any).hash = "3026e54eb67fa8b1d941143a2e21a17d";
+(node as any).hash = "8f7fcb9efb19f1c0019240c1614add14";
 
 export default node;

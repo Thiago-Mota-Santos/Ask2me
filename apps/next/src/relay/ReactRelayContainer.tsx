@@ -2,9 +2,10 @@ import type { NextComponentType, NextPage, NextPageContext } from 'next'
 import React, { Suspense, useMemo } from 'react'
 import { ReactRelayContext, useRelayEnvironment } from 'react-relay'
 
+import Providers from '../components/providers/Providers'
 import { createEnvironment } from './RelayEnvironment'
 
-type NextPageWithLayout<T> = NextPage<T> & {
+export type NextPageWithLayout<T> = NextPage<T> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode
 }
 
@@ -67,5 +68,5 @@ function Hydrate<T>({
     return { ...otherProps, queryRefs }
   }, [props])
 
-  return <>{getLayout(<Component {...transformedProps} />)}</>;
+  return <Providers>{getLayout(<Component {...transformedProps} />)}</Providers>
 }

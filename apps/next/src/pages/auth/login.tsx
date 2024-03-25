@@ -12,6 +12,8 @@ import { toast } from '@repo/ui/index';
 import { loginMutation$data } from '../../__generated__/loginMutation.graphql';
 import { LoginMutation } from '@/components/auth/mutation/login';
 import { AuthContext } from '@/context/AuthContext';
+import { GetServerSideProps } from 'next';
+import { parseCookies } from 'nookies';
 
 const schema = yup.object({
     email: yup.string().email('Invalid email address').required('Required').trim(),
@@ -57,7 +59,7 @@ export default function Login() {
         })
 
         signIn(token)
-        router.push('/')
+        router.push('/create')
       },
     })
   }
@@ -167,5 +169,22 @@ export default function Login() {
       </div>
     </main>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { 'token': token } = parseCookies(ctx)
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
 

@@ -1,4 +1,4 @@
-import { AvatarIcon, ArrowLeftIcon } from '@radix-ui/react-icons'
+import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { useRouter } from 'next/navigation'
 import { 
     Avatar, 
@@ -8,7 +8,6 @@ import {
     MenubarItem,
     MenubarMenu,
     MenubarTrigger,
-    Separator,
     Text 
 } from '@repo/ui/index'
 import { AuthContext } from '@/context/AuthContext'
@@ -18,7 +17,7 @@ export default function AvatarMenuBar() {
   const { signout } = AuthContext()
   const handleLogout = async () => {
     signout()
-    router.push("/login")
+    router.push("/auth/login")
   } 
 
   return (
@@ -39,32 +38,13 @@ export default function AvatarMenuBar() {
               direction="column"
               className="ml-1 hidden md:flex"
             >
-              <Text size="2" className="hidden md:flex">
-                thiago
-              </Text>
-              <Text className="hidden md:block" size="2" color="gray">
-                Admin
-              </Text>
             </Flex>
           </Flex>
         </MenubarTrigger>
         <MenubarContent
           sideOffset={5}
           className="flex items-start justify-center z-10 flex-col bg-white min-w-[224px] p-4 border shadow-custom rounded-lg border-gray-200"
-        >
-          <MenubarItem onClick={() => router.push('/profile')}>
-            <Text
-              as="span"
-              weight="light"
-              ml="3"
-              size="5"
-              className="flex items-center justify-center"
-            >
-              <AvatarIcon className="mr-1" fontSize={5} />
-              <Text className="ml-1 hover:cursor-pointer">Profile</Text>
-            </Text>
-          </MenubarItem>
-          <Separator size="4" className="h-[1px] bg-[#E2E8F0] m-1" />
+        > 
           <MenubarItem onClick={handleLogout}>
             <Text
               as="span"
