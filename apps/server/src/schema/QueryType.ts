@@ -1,8 +1,6 @@
 import { GraphQLFieldConfig, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql'
 import { nodeField, nodesField } from '../node/typeRegister'
-import { AppointmentConnection } from '../modules/appointment/appointmentType'
 import { connectionArgs, getObjectId } from '@entria/graphql-mongo-helpers'
-import { AppointmentLoader } from '../modules/appointment/appointmentLoader'
 import { UserType } from '../modules/user/userType'
 import { UserLoader } from '../modules/user/userLoader'
 import { ProfileConnection, ProfileType } from '../modules/profile/profileType'
@@ -10,6 +8,7 @@ import { ProfileModel } from '../modules/profile/profileModel'
 import { ProfileLoader } from '../modules/profile/profileLoader'
 import { QuestionConnection, QuestionType } from '../modules/question/questionType'
 import { QuestionModel } from '../modules/question/questionModel'
+import { QuestionLoader } from '../modules/question/questionLoader'
 
 
 const profiles: GraphQLFieldConfig<any, any, any> = {
@@ -51,6 +50,7 @@ const question: GraphQLFieldConfig<any, any, any> = {
     return questions;
   }
 }
+
 
 const questions: GraphQLFieldConfig<any, any, any> = {
   type: new GraphQLNonNull(QuestionConnection.connectionType),

@@ -2,9 +2,6 @@ interface DataLoaders {
   UserLoader: ReturnType<
     typeof import('../user/userLoader').UserLoader.getLoader
   >
-  AppointmentLoader: ReturnType<
-    typeof import('../appointment/appointmentLoader').AppointmentLoader.getLoader
-  >
   ProfileLoader: ReturnType<
     typeof import('../profile/profileLoader').ProfileLoader.getLoader
   >

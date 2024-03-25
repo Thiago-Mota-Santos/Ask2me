@@ -1,4 +1,3 @@
-import { graphql } from 'graphql'
 import { clearDatabaseAndRestartCounters } from '../../../../test/clearDatabase'
 import { mongooseConnection } from '../../../../test/mongooseConnection'
 import { mongooseDisconnect } from '../../../../test/mongooseDisconnect'
@@ -71,9 +70,11 @@ it('should return a not found user', async () => {
   })
 
   expect(result.data?.userLoginMutation).toBeNull()
+  
+  if(!result.errors) return
 
   expect(result.errors).toBeDefined()
-  expect(result?.errors?.[0].message).toBe('User not found!')
+  expect(result?.errors[0]?.message).toBe('User not found!')
 })
 it('should return a wrong password', async () => {
   const { email } = await createUser({ email: 'test@example.com' })

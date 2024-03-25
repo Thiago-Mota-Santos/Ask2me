@@ -1,15 +1,14 @@
 import jwt from 'jsonwebtoken'
-import { UserDocument, UserModel } from './modules/user/UserModel'
-import { Maybe } from '@fullstack/types'
 import { ParameterizedContext } from 'koa'
+import { UserDocument, UserModel } from './modules/user/userModel'
+import { Maybe } from '../../../packages/types/src/Maybe'
 
 const JWT_KEY = process.env.JWT_KEY as string
 
 const getUser = async (
   ctx: ParameterizedContext,
 ): Promise<{ user: Maybe<UserDocument> }> => {
-  const token = ctx.cookies.get('graphic-token')
-  console.log(ctx.header)
+  const token = ctx.cookies.get('token')
   try {
     if (!token) return { user: null }
     const subToken = token.replace('JWT%20', '')
