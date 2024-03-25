@@ -28,6 +28,24 @@ const fetchQuery: FetchFunction = async (
   return await response.json()
 }
 
+export const fetchGraphQL = async (query: string, variables: object = {}) => {
+  const response = await fetch(GRAPHQL_ENPOINT, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({
+      query,
+      variables,
+    }),
+  });
+
+  const data = await response.json();
+
+  return data;
+};
+
 /**
  * Create a network layer from the fetch function
  */
