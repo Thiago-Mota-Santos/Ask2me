@@ -1,13 +1,14 @@
 import { fetchGraphQL } from '@/relay/environment';
 import { ImageResponse } from '@vercel/og';
-import { NextApiRequest } from 'next';
+import { NextRequest } from 'next/server';
  
 export const config = {
   runtime: 'edge',
 };
  
-export default async function (req: NextApiRequest) {
-  const { profileId } = req.query 
+export default async function handler(req: NextRequest) {
+  const { searchParams } = new URL(req.url); 
+  const profileId = searchParams.get('profileId')
   const result = await fetchGraphQL(
       `
       query($profileId: String!) {
