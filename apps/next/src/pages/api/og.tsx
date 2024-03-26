@@ -1,4 +1,4 @@
-import { fetchGraphQL } from '@/relay/environment';
+// import { fetchGraphQL } from '@/relay/environment';
 import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
  
@@ -7,20 +7,20 @@ export const config = {
 };
  
 export default async function handler(req: NextRequest) {
-  const { searchParams } = new URL(req.url); 
-  const profileId = searchParams.get('profileId')
-  const result = await fetchGraphQL(
-      `
-      query($profileId: String!) {
-        question(profileId: $profileId) {
-          text
-          page
-        }
-      }
+  // const { searchParams } = new URL(req.url); 
+  // const profileId = searchParams.get('profileId')
+  // const result = await fetchGraphQL(
+  //     `
+  //     query($profileId: String!) {
+  //       question(profileId: $profileId) {
+  //         text
+  //         page
+  //       }
+  //     }
       
-      `,
-      {profileId},
-    );
+  //     `,
+  //     {profileId},
+  //   );
 
 
   return new ImageResponse(
@@ -42,11 +42,11 @@ export default async function handler(req: NextRequest) {
             <span tw="text-orange-500 font-bold text-2xl">Pergunta</span>
           </div>
           <div tw="flex p-8 pt-2">
-            <span tw="font-bold">{result.data.question.text}</span>
+            <span tw="font-bold">Você gosta de queijo?</span>
           </div>
           <div tw="flex flex-col items-center justify-center p-2 bg-orange-500 w-full">
             <span tw="text-white">Faça uma pergunta também!</span>
-            <span tw="text-sm font-bold text-white">{`ask2me-next.vercel.app${result.data.question.page}`}</span>
+            <span tw="text-sm font-bold text-white">ask2me-next.vercel.app/thiago</span>
           </div>
         </div>
       </div>
