@@ -4,69 +4,56 @@ import ProfileInfo from "@/components/ProfileInfo";
 import { getCookie } from "@/utils/getToken";
 import pageQuery, { pagesQuery as pageQueryType } from "@/__generated__/pagesQuery.graphql";
 import { getPreloadedQuery } from "@/relay/network";
-import rootLayoutQuery, { rootLayoutQuery as rootLayoutQueryType } from "@/__generated__/rootLayoutQuery.graphql";
 import { NextPageWithLayout } from '../relay/ReactRelayContainer'
-import RootLayout from "@/layouts/rootLayout";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import DashboardHeader from "@/components/DashboardHeader";
+import Questionlist from "@/components/QuestionList";
+import { Card } from "@repo/ui/card";
 
 type HomeProps = {
   queryRefs: {
     pageQuery: PreloadedQuery<pageQueryType>
-    rootLayoutQuery: PreloadedQuery<rootLayoutQueryType>;
   }
 }
-
 
 const Profile = graphql`
   query pagesQuery {
-    profile {
-      ...ProfileInfo_profile
-    }
-    questions {
-    ...QuestionList_question
-  }
-}
+    ...ProfileInfo_profile
+    ...QuestionList
+  } 
 `;
-
-
 
 const Home: NextPageWithLayout<HomeProps> = ({ queryRefs }) => {
   const router = useRouter()
-  const data = usePreloadedQuery(Profile, queryRefs.pageQuery);
-  const { profile } = data;
-  // TODO: find best form to make this redirect
-
-  // if(!profile){
-    // router.push('/create')
-  // }
-
-  // https://nextjs.org/docs/messages/no-router-instance
+  const data = usePreloadedQuery<pageQueryType>(Profile, queryRefs.pageQuery);
   
   useEffect(() => {
-    if(!profile){
+    if (!data) {
       router.push("/create")
-      return
     }
-  },[])
-  
+  }, [data])
 
-  if(!profile) {
+  if (!data) {
     return null
   }
 
   return (
-     <ProfileInfo profile={profile} />
+    <div className="h-screen">
+      <DashboardHeader hasArrow />
+      <div className="flex items-center mt-8 justify-center">
+        <Card className="w-[800px] bg-gray-100">
+          <ProfileInfo profile={data} />
+          <Questionlist questions={data} /> 
+        </Card>
+      </div>
+    </div>
   );
 }
 
-Home.getLayout = page => {
-  return <RootLayout queryRef={page.props.queryRefs.rootLayoutQuery}>{page}</RootLayout>;
-  
-};
-
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const token = getCookie(ctx.req.headers);
+
   if (!token) {
     return {
       redirect: {
@@ -76,16 +63,14 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       props: {},
     };
   }
- 
+
   return {
     props: {
       preloadedQueries: {
         pageQuery: await getPreloadedQuery(pageQuery, {}, token),
-        rootLayoutQuery: await getPreloadedQuery(pageQuery, {}, token),
       },
     },
   };
 };
 
-export default Home
-
+export default Home;
