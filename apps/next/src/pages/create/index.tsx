@@ -23,45 +23,64 @@ type CreateProps = {
   }
 }
 
-export default function Create ({ queryRefs }: CreateProps) {
+export default function Create({ queryRefs }: CreateProps) {
   const router = useRouter()
+
+  if (!queryRefs) {
+    return (
+      <div className="h-screen">
+        <DashboardHeader hasArrow/>
+        <div className="flex items-center mt-8 justify-center">
+          <ProfileForm />
+        </div>
+      </div>
+    )
+  }
+
   const data = usePreloadedQuery(Profile, queryRefs.createQuery);
   const { profile } = data;
-
   useEffect(() => {
-    if(profile){
-      router.push("/")
-      return
+    if (profile) {
+      router.push("/");
     }
-  },[])
-
-    return (
-     <div className="h-screen">
-        <DashboardHeader hasArrow/>
-      <div className="flex items-center mt-8 justify-center">
-        <ProfileForm />
-      </div>
-     </div>
-    )
+  }, [profile, router]);
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const token = getCookie(ctx.req.headers);
-    if (!token) {
+  const token = getCookie(ctx.req.headers);
+
+  if (!token) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/auth/register',
+      },
+      props: {},
+    };
+  }
+  
+  try {
+    const preloadedQueries = {
+      createQuery: await getPreloadedQuery(createQuery, {}, token),
+    };
+
+    const profile = preloadedQueries.createQuery;
+    console.log(profile);
+    if (!profile) {
       return {
-        redirect: {
-          permanent: false,
-          destination: '/auth/register',
-        },
         props: {},
       };
     }
-    
+
     return {
       props: {
-        preloadedQueries: {
-          createQuery: await getPreloadedQuery(createQuery, {}, token),
-        },
+        preloadedQueries,
       },
     };
+  } catch (error) {
+    console.error("Erro ao carregar o perfil:", error);
+    return {
+      props: {}, 
+    };
+  }
 };
