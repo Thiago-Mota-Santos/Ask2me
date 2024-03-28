@@ -14,7 +14,6 @@ import { addBar } from "@/utils/addBar";
 
 const socialMedia = yup.object().shape({
   instagram: yup.string(),
-  linkedin: yup.string(),
   X: yup.string(),
   twitch: yup.string(),
   youtube: yup.string(),
@@ -42,7 +41,6 @@ export default function ProfileForm () {
   const [request] = useMutation(ProfileMutation)
 
   function onSubmit(form: FormValues) {
-
     request({
       variables: {
         page: addBar(form.page),
@@ -135,20 +133,6 @@ export default function ProfileForm () {
               placeholder="adicione o link"
               {...register("socialMedia.instagram")}
 
-            />
-          </div>
-          <div className="flex gap-2">
-            <Image
-              src="/social/linkedin.svg"
-              alt="Social media icone"
-              width={32}
-              height={32}
-            />
-            <Input
-              type="text"
-              id="linkedin"
-              className={`bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-8/12 p-2.5`}
-              placeholder="adicione o link"
             />
           </div>
           <div className="flex gap-2">
