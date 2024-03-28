@@ -34,4 +34,4 @@ export const ContentForm = {
   TextareaField
 }
 
-export { Toaster, toast } from 'sonner'
+export { toast } from 'sonner'
