@@ -197,7 +197,7 @@ export default function Register() {
 
               <FormSubmit asChild>
                 <Button
-                  className='className="py-3 dark:focus:ring-offset-gray-800" inline-flex h-12 items-center justify-center gap-2 rounded-md border border-transparent bg-brandblue px-4 text-sm font-semibold text-white transition-all hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
+                  className='py-3 dark:focus:ring-offset-gray-800" inline-flex h-12 items-center justify-center gap-2 rounded-md border border-transparent bg-blue-500 px-4 text-sm font-semibold text-white transition-all hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2'
                   type="submit"
                 >
                   Sign up
