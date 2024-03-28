@@ -5,8 +5,6 @@ import { getCookie } from "@/utils/getToken";
 import pageQuery, { pagesQuery as pageQueryType } from "@/__generated__/pagesQuery.graphql";
 import { getPreloadedQuery } from "@/relay/network";
 import { NextPageWithLayout } from '../relay/ReactRelayContainer'
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import DashboardHeader from "@/components/DashboardHeader";
 import Questionlist from "@/components/QuestionList";
 import { Card } from "@repo/ui/card";
@@ -25,14 +23,7 @@ const Profile = graphql`
 `;
 
 const Home: NextPageWithLayout<HomeProps> = ({ queryRefs }) => {
-  const router = useRouter()
   const data = usePreloadedQuery<pageQueryType>(Profile, queryRefs.pageQuery);
-  
-  useEffect(() => {
-    if (!data) {
-      router.push("/create")
-    }
-  }, [data])
 
   if (!data) {
     return null
@@ -64,10 +55,23 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
   }
 
+  const profile = await getPreloadedQuery(pageQuery, {}, token)
+
+  // TODO: ever profile doesn't exist, profile return data, how to make this redirect correctly?
+  if(!profile){
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/create'
+      },
+      props: {}
+    }
+  }
+
   return {
     props: {
       preloadedQueries: {
-        pageQuery: await getPreloadedQuery(pageQuery, {}, token),
+        pageQuery: profile
       },
     },
   };
