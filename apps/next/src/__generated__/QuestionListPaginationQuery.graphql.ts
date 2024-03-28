@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb28e65bdca71c3a0d1e68f0a50b71c3>>
+ * @generated SignedSource<<8f75147cb27322f88e5f325fb65260b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,53 +10,54 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type pagesQuery$variables = Record<PropertyKey, never>;
-export type pagesQuery$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ProfileInfo_profile" | "QuestionList">;
+export type QuestionListPaginationQuery$variables = {
+  after?: string | null | undefined;
+  first?: number | null | undefined;
 };
-export type pagesQuery = {
-  response: pagesQuery$data;
-  variables: pagesQuery$variables;
+export type QuestionListPaginationQuery$data = {
+  readonly " $fragmentSpreads": FragmentRefs<"QuestionDetails_question">;
+};
+export type QuestionListPaginationQuery = {
+  response: QuestionListPaginationQuery$data;
+  variables: QuestionListPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "page",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v2 = [
+var v0 = [
   {
-    "kind": "Literal",
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after"
+  },
+  {
+    "defaultValue": 5,
+    "kind": "LocalArgument",
+    "name": "first"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
     "name": "first",
-    "value": 5
+    "variableName": "first"
   }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "pagesQuery",
+    "name": "QuestionListPaginationQuery",
     "selections": [
       {
-        "args": null,
+        "args": (v1/*: any*/),
         "kind": "FragmentSpread",
-        "name": "ProfileInfo_profile"
-      },
-      {
-        "args": null,
-        "kind": "FragmentSpread",
-        "name": "QuestionList"
+        "name": "QuestionDetails_question"
       }
     ],
     "type": "Query",
@@ -64,65 +65,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "pagesQuery",
+    "name": "QuestionListPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Profile",
-        "kind": "LinkedField",
-        "name": "profile",
-        "plural": false,
-        "selections": [
-          (v0/*: any*/),
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "SocialMedia",
-            "kind": "LinkedField",
-            "name": "socialMedia",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "instagram",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "youtube",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "X",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "twitch",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          (v1/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "QuestionConnection",
         "kind": "LinkedField",
         "name": "questions",
@@ -183,7 +132,13 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v0/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "page",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -198,7 +153,13 @@ return {
                     "name": "answer",
                     "storageKey": null
                   },
-                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -220,11 +181,11 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "questions(first:5)"
+        "storageKey": null
       },
       {
         "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v1/*: any*/),
         "filters": [],
         "handle": "connection",
         "key": "QuestionList_questions",
@@ -234,16 +195,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2eb0e34a59ebf133510e78950a7d6f03",
+    "cacheID": "d0c2aae2004f1f2dfc90e921705e14c3",
     "id": null,
     "metadata": {},
-    "name": "pagesQuery",
+    "name": "QuestionListPaginationQuery",
     "operationKind": "query",
-    "text": "query pagesQuery {\n  ...ProfileInfo_profile\n  ...QuestionList\n}\n\nfragment ProfileInfo_profile on Query {\n  profile {\n    page\n    socialMedia {\n      instagram\n      youtube\n      X\n      twitch\n    }\n    id\n  }\n}\n\nfragment QuestionDetails_question on Query {\n  questions(first: 5) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        page\n        text\n        answer\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n\nfragment QuestionList on Query {\n  ...QuestionDetails_question\n}\n"
+    "text": "query QuestionListPaginationQuery(\n  $after: String\n  $first: Int = 5\n) {\n  ...QuestionDetails_question_2HEEH6\n}\n\nfragment QuestionDetails_question_2HEEH6 on Query {\n  questions(first: $first, after: $after) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        page\n        text\n        answer\n        id\n        __typename\n      }\n      cursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d61c7bc065c53ff591a99628df06ff8c";
+(node as any).hash = "ddb45cd28651176a24b0fb308cd81556";
 
 export default node;

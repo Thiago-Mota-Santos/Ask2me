@@ -25,10 +25,9 @@ export default function ProfileInfo({ profile }: { profile: ProfileInfo_profile$
     `,
     profile,
   );
-
   const renderSocialMediaIcons = () => {
     const socialMediaIcons = [];
-
+   
     for (const [socialNetwork, link] of Object.entries(data.profile?.socialMedia!)) {
       if (link && link.trim() !== '') {
         const iconSrc = `/social/${socialNetwork}.svg`;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5cae01aa0acd3765a73f8d225efd636>>
+ * @generated SignedSource<<302f7a36c7081e08fee6622299ff1080>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ProfileInfo_profile$data = {
-  readonly description: string | null | undefined;
-  readonly page: string;
-  readonly pixKey: string;
-  readonly socialMedia: {
-    readonly X: string | null | undefined;
-    readonly instagram: string | null | undefined;
-    readonly linkedin: string | null | undefined;
-    readonly twitch: string | null | undefined;
-    readonly youtube: string | null | undefined;
+  readonly profile: {
+    readonly page: string;
+    readonly socialMedia: {
+      readonly X: string;
+      readonly instagram: string;
+      readonly twitch: string;
+      readonly youtube: string;
+    } | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "ProfileInfo_profile";
 };
@@ -37,75 +36,65 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "page",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "pixKey",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "description",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "SocialMedia",
+      "concreteType": "Profile",
       "kind": "LinkedField",
-      "name": "socialMedia",
+      "name": "profile",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "instagram",
+          "name": "page",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "linkedin",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "X",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "twitch",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "youtube",
+          "concreteType": "SocialMedia",
+          "kind": "LinkedField",
+          "name": "socialMedia",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "instagram",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "youtube",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "X",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "twitch",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
       "storageKey": null
     }
   ],
-  "type": "Profile",
+  "type": "Query",
   "abstractKey": null
 };
 
-(node as any).hash = "29bed10b974a9959bca35ac53b35457f";
+(node as any).hash = "ea02e58ca796a0f2d5ad722e5d8691b0";
 
 export default node;

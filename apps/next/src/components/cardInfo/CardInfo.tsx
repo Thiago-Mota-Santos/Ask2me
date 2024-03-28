@@ -3,14 +3,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@repo/ui/button";
 import { Card, CardContent, CardFooter } from "@repo/ui/card";
-import { Avatar, Textarea, Text, Box, Form, toast } from "@repo/ui/index";
-import { graphql, useFragment, useLazyLoadQuery, useMutation } from "react-relay";
+import { Avatar, Textarea, Text, Box, Form, toast, Separator } from "@repo/ui/index";
+import { graphql, useFragment, useMutation } from "react-relay";
 import { usePathname } from "next/navigation";
 import { CardInfo_card$key } from "@/__generated__/CardInfo_card.graphql";
 import { createQuestionMutation } from './createQuestion';
 import { createQuestionMutation$data } from '@/__generated__/createQuestionMutation.graphql';
 import { useRouter } from 'next/navigation';
 import NotFoundPage from '../notFoundPage';
+import { Input } from '@repo/ui/input';
+import { fiatFormat } from '@/utils/fiatFormat';
+import { ChangeEvent, useState } from 'react';
 
 
 const questionSchema = yup.object({
@@ -45,12 +48,12 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
 
     const path = usePathname()
     // todo: this state will be used when payment via pix is enabled
-    // const [sliderValue, setSliderValue] = useState(0.10);
+    const [sliderValue, setSliderValue] = useState(0.10);
     
-    // const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //   const newValue = parseFloat(e.target.value);
-    //   setSliderValue(newValue);
-    // }
+    const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
+      const newValue = parseFloat(e.target.value);
+      setSliderValue(newValue);
+    }
 
     const isPathInProfile = data?.edges?.some(edge => edge?.node?.page === path);
     const profileInfo = data?.edges?.filter(edge => edge?.node?.page === path);
@@ -106,9 +109,9 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
           </Box>
           <CardContent className="flex flex-col mt-10 items-center justify-center gap-6">
             <Box className="w-full gap-1 flex flex-col items-center justify-center">
-              {/* <Text weight="bold" className="text-gray-600">{`R$ ${fiatFormat(sliderValue)}`}</Text> */}
-              {/* <Separator color="crimson" mb="2" size="2" /> */}
-              {/* <Input onChange={handleSliderChange} type="range" className="w-8/12 appearance-none bg-orange-500 h-1 rounded outline-none" min="0.10" max="1000"/> */}
+              <Text weight="bold" className="text-gray-600">{`R$ ${fiatFormat(sliderValue)}`}</Text> *
+              <Separator color="crimson" mb="2" size="2" />
+               <Input onChange={handleSliderChange} type="range" className="w-8/12 appearance-none bg-orange-500 h-1 rounded outline-none" min="0.10" max="1000"/>
             </Box>
             <Text size="5" weight="bold">Faça alguma pergunta!</Text>
             <Textarea

@@ -26,8 +26,6 @@ const schema = yup.object({
   socialMedia: socialMedia,
 });
 
-
-
 const resolver = yupResolver(schema);
 
 type FormValues = yup.InferType<typeof schema>;

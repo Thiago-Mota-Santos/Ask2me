@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { AnswerCard$key } from "@/__generated__/AnswerCard.graphql";
+import { AnswerCard$data, AnswerCard$key } from "@/__generated__/AnswerCard.graphql";
 import { Button } from "@repo/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@repo/ui/card";
 import { Avatar, Box, Form, Text, Textarea, toast } from "@repo/ui/index";
@@ -8,11 +8,10 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { createAnswerMutation } from './createAnswer';
 import { useRouter } from "next/navigation"
-import { Router } from 'lucide-react';
 
 const questionSchema = yup.object({
     answer: yup.string().required('Required').trim(),
-  });
+});
   
 const resolver = yupResolver(questionSchema);
   
