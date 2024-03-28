@@ -48,13 +48,13 @@ export default function QuestionDetails ({ fragmentKey }: QuestionDetails) {
   }, [hasNext, isLoadingNext, loadNext]);
 
   return (
-    <Box className="flex w-full flex-col">
-      {data?.questions.edges?.map(edge => (
-        <>
-        <Box className="flex items-center flex-row mt-2 mb-4">
+    <Box className="flex w-full flex-col space-y-1">
+      <Box className="flex items-center flex-row mt-2 mb-4">
           <Text size="6" className="text-gray-800" weight="bold">Perguntas</Text>
           <Separator size="4" />
         </Box>
+      {data?.questions.edges?.map(edge => (
+        <>
         <div className="flex flex-col" key={edge?.node?.id}>
             <Link target="_blank" href={`${edge?.node?.page}/${edge?.node?.id}`}>
               <Text weight="bold" className="hover:underline">
