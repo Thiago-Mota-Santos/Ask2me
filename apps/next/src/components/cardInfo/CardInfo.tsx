@@ -72,17 +72,15 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
           profileId
         },
         onError() {
-          toast.error("Uh oh! Something went wrong", {
-              description: "try again"
-          })
+          toast.error("Algo deu errado :(", {
+            description: "Tente novamente"
+        })
         },
         onCompleted(response: {} | null) {
           const { questionCreateMutation } = response as createQuestionMutation$data;
           const questionId = questionCreateMutation?.questionEdge?.node?.id
           
-          toast(`Profile created`, {
-              description: "Wait for your question to be answered",
-          })
+          toast(`Pergunta enviada com sucesso`)
           router.push(`/${path}/${questionId}`) 
         },
       });
