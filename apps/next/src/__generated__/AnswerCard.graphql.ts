@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a36c37ab73808f60d2298b047a9a807f>>
+ * @generated SignedSource<<4e7a8fbe082d010f9817c2979b29bd27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type AnswerCard$data = {
   readonly answer: string | null | undefined;
   readonly id: string;
   readonly page: string | null | undefined;
-  readonly text: string;
+  readonly text: string | null | undefined;
   readonly " $fragmentType": "AnswerCard";
 };
 export type AnswerCard$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f19607218e23045d9803a2ea8e01b7e6>>
+ * @generated SignedSource<<2e09af4049afb37f80e9531093d9f3a9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,7 @@ export type createAnswerMutation$data = {
       readonly node: {
         readonly answer: string | null | undefined;
         readonly id: string;
-        readonly text: string;
+        readonly text: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
   } | null | undefined;

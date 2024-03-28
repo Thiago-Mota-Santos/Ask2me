@@ -32,7 +32,6 @@ export default function QuestionCard({ queryRefs }: UserCardProps) {
   const data = usePreloadedQuery(CardQuery, queryRefs.questionQuery);
   
   const { question } = data;
-
   if(!question) return 
   
   return (

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3cc3c1b2d438d0c57c1da4209d7a0059>>
+ * @generated SignedSource<<3983c7cc5a770134274fb4533fbfa648>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type createQuestionMutation$data = {
     readonly questionEdge: {
       readonly node: {
         readonly id: string;
-        readonly text: string;
+        readonly text: string | null | undefined;
       } | null | undefined;
     } | null | undefined;
   } | null | undefined;

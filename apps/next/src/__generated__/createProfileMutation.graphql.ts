@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d7d0af1303b6391771e16c262941e8a3>>
+ * @generated SignedSource<<8247bccfd869ab9032d11a04d634901e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,10 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SocialMediaInput = {
-  X?: string | null | undefined;
-  instagram?: string | null | undefined;
-  linkedin?: string | null | undefined;
-  twitch?: string | null | undefined;
-  youtube?: string | null | undefined;
+  X: string;
+  instagram: string;
+  twitch: string;
+  youtube: string;
 };
 export type createProfileMutation$variables = {
   description: string;
@@ -30,11 +29,10 @@ export type createProfileMutation$data = {
         readonly page: string;
         readonly pixKey: string;
         readonly socialMedia: {
-          readonly X: string | null | undefined;
-          readonly instagram: string | null | undefined;
-          readonly linkedin: string | null | undefined;
-          readonly twitch: string | null | undefined;
-          readonly youtube: string | null | undefined;
+          readonly X: string;
+          readonly instagram: string;
+          readonly twitch: string;
+          readonly youtube: string;
         } | null | undefined;
       } | null | undefined;
     } | null | undefined;
@@ -128,13 +126,6 @@ v8 = {
       "args": null,
       "kind": "ScalarField",
       "name": "instagram",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "linkedin",
       "storageKey": null
     },
     {
@@ -272,16 +263,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0e2b3e9660c4ecd296b7d9ffab25fddc",
+    "cacheID": "f8d2809431d290296b7425332ec7917d",
     "id": null,
     "metadata": {},
     "name": "createProfileMutation",
     "operationKind": "mutation",
-    "text": "mutation createProfileMutation(\n  $page: String!\n  $pixKey: String!\n  $description: String!\n  $socialMedia: SocialMediaInput\n) {\n  profileRegisterMutation(input: {page: $page, pixKey: $pixKey, description: $description, socialMedia: $socialMedia}) {\n    profileEdge {\n      node {\n        page\n        pixKey\n        description\n        socialMedia {\n          instagram\n          linkedin\n          X\n          twitch\n          youtube\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation createProfileMutation(\n  $page: String!\n  $pixKey: String!\n  $description: String!\n  $socialMedia: SocialMediaInput\n) {\n  profileRegisterMutation(input: {page: $page, pixKey: $pixKey, description: $description, socialMedia: $socialMedia}) {\n    profileEdge {\n      node {\n        page\n        pixKey\n        description\n        socialMedia {\n          instagram\n          X\n          twitch\n          youtube\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "655b94c3b1ceeabd19033724fa42c45a";
+(node as any).hash = "7d8ce80ba315dce899d951f91497a51f";
 
 export default node;
