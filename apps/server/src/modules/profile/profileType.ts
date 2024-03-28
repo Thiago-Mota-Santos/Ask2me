@@ -1,8 +1,11 @@
 import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql'
 import { connectionDefinitions, globalIdField } from 'graphql-relay'
 import { nodeInterface, registerTypeLoader } from '../../node/typeRegister'
-import { Profile } from './profileModel'
+import { Profile, ProfileModel } from './profileModel'
 import { ProfileLoader } from './profileLoader'
+import { QuestionConnection } from '../question/questionType'
+import { connectionArgs } from '@entria/graphql-mongo-helpers'
+import { QuestionLoader } from '../question/questionLoader'
 
 export const ProfileType = new GraphQLObjectType<Profile>({
   name: 'Profile',
@@ -26,24 +29,27 @@ export const ProfileType = new GraphQLObjectType<Profile>({
           name: 'SocialMedia',
           fields: () => ({
             instagram: {
-              type: GraphQLString,
-            },
-            linkedin: {
-              type: GraphQLString,
+              type: new GraphQLNonNull(GraphQLString),
             },
             X: {
-              type: GraphQLString,
+              type: new GraphQLNonNull(GraphQLString),
             },
             twitch: {
-              type: GraphQLString,
+              type: new GraphQLNonNull(GraphQLString),
             },
             youtube: {
-              type: GraphQLString,
+              type: new GraphQLNonNull(GraphQLString),
             },
           }),
         }),
       },
-  }),
+  questions: {
+    type: new GraphQLNonNull(QuestionConnection.connectionType),
+    args: { ...connectionArgs },
+    resolve: async (_root, _args, context) =>
+      await QuestionLoader.loadAll(context, _args),
+    }
+}),
   interfaces: () => [nodeInterface],
 })
 

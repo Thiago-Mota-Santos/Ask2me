@@ -16,11 +16,10 @@ const profileRegisterMutation = mutationWithClientMutationId({
       type: new GraphQLInputObjectType({
         name: 'SocialMediaInput',
         fields: {
-          instagram: { type: GraphQLString },
-          linkedin: { type: GraphQLString },
-          X: { type: GraphQLString },
-          twitch: { type: GraphQLString },
-          youtube: { type: GraphQLString },
+          instagram: { type: new GraphQLNonNull(GraphQLString) },
+          X: { type: new GraphQLNonNull(GraphQLString) },
+          twitch: { type: new GraphQLNonNull(GraphQLString) },
+          youtube: { type: new GraphQLNonNull(GraphQLString) },
         },
       }),
     },
