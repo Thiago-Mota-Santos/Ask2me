@@ -1,4 +1,4 @@
-import { GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql'
+import { GraphQLObjectType, GraphQLString } from 'graphql'
 import { connectionDefinitions, globalIdField } from 'graphql-relay'
 import { nodeInterface, registerTypeLoader } from '../../node/typeRegister'
 import { Question } from './questionModel'
@@ -10,7 +10,7 @@ export const QuestionType = new GraphQLObjectType<Question>({
   fields: () => ({
     id: globalIdField('Question'),
     text: {
-      type: new GraphQLNonNull(GraphQLString),
+      type: GraphQLString,
       resolve: (question) => question.text,
     },
     answer: {

@@ -21,7 +21,6 @@ it('should be able create an user profile', async () => {
       description: "Responderei qualquer pergunta",
       socialMedia: {
       instagram: "thiagoinsta@313",
-      linkedin: "thiago_dev",
       X: "Teaga014",
       twitch: "thiagodev",
       youtube: "thiagodev"
@@ -81,7 +80,6 @@ it('should be able create an user profile', async () => {
   expect(profileEdge.node.description).toBe(variableValues.description);
 
   expect(profileEdge.node.socialMedia.instagram).toBe(variableValues.socialMedia.instagram);
-  expect(profileEdge.node.socialMedia.linkedin).toBe(variableValues.socialMedia.linkedin);
   expect(profileEdge.node.socialMedia.X).toBe(variableValues.socialMedia.X);
   expect(profileEdge.node.socialMedia.twitch).toBe(variableValues.socialMedia.twitch);
   expect(profileEdge.node.socialMedia.youtube).toBe(variableValues.socialMedia.youtube);

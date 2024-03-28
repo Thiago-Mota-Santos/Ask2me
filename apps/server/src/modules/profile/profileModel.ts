@@ -1,3 +1,4 @@
+import { QuestionConnection } from './../question/questionType';
 import mongoose, { Document, Types, Schema } from 'mongoose'
 import { Maybe } from '../../../../../packages/types/src/Maybe'
 
@@ -14,6 +15,7 @@ export type Profile = {
     twitch: string
     youtube: string
   }
+  questions?: typeof QuestionConnection
   profileId: Types.ObjectId
   _id: Types.ObjectId
 } & Document
@@ -23,13 +25,13 @@ type ProfileDocument = Maybe<Document> & Profile
 const ProfileSchema = new mongoose.Schema<Profile>(
   {
     profileId: {
-        ref: "User",
-        type: Schema.Types.ObjectId
+      ref: "User",
+      type: Schema.Types.ObjectId
     },
     page: {
       type: String,
       required: true,
-      unique: true, 
+      unique: true,
       min: 3,
       max: 15,
     },
@@ -43,24 +45,23 @@ const ProfileSchema = new mongoose.Schema<Profile>(
       type: String,
       max: 300,
     },
+    questions: {
+      type: Object, 
+    },
     socialMedia: {
-        instagram: {
-          type: String,
-        },
-        linkedin: {
-          type: String,
-        },
-        X: {
-          type: String,
-        },
-        twitch: {
-          type: String,
-        },
-        youtube: {
-          type: String,
-        },
-      }
-      
+      instagram: {
+        type: String,
+      },
+      X: {
+        type: String,
+      },
+      twitch: {
+        type: String,
+      },
+      youtube: {
+        type: String,
+      },
+    },
   },
   {
     collection: 'Profile',
@@ -69,14 +70,13 @@ const ProfileSchema = new mongoose.Schema<Profile>(
 )
 
 ProfileSchema.pre<Profile>('save', async function (next) {
-    const existingProfile = await ProfileModel.findOne({ page: this.page });
-    if (existingProfile && !existingProfile._id.equals(this._id)) {
-      const error = new Error('Já existe um perfil com esta página.');
-      next(error);
-    } 
-    next()
+  const existingProfile = await ProfileModel.findOne({ page: this.page });
+  if (existingProfile && !existingProfile._id.equals(this._id)) {
+    const error = new Error('Já existe um perfil com esta página.');
+    next(error);
+  }
+  next()
 });
-
 
 export const ProfileModel = mongoose.model<ProfileDocument>('Profile', ProfileSchema)
 
