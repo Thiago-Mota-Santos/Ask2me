@@ -9,6 +9,7 @@ const getUser = async (
   ctx: ParameterizedContext,
 ): Promise<{ user: Maybe<UserDocument> }> => {
   const token = ctx.cookies.get('token')
+  console.log(token)
   try {
     if (!token) return { user: null }
     const subToken = token.replace('JWT%20', '')
