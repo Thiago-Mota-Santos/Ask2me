@@ -11,9 +11,9 @@ type Query {
     """The IDs of objects"""
     ids: [ID!]!
   ): [Node]!
-  profile: Profile
   profiles(after: String, first: Int, before: String, last: Int): ProfileConnection!
   question(profileId: String!, after: String, first: Int, before: String, last: Int): Question
+  profile: Profile
   questions(after: String, first: Int, before: String, last: Int): QuestionConnection!
 
   """user logged"""
@@ -24,24 +24,6 @@ type Query {
 interface Node {
   """The id of the object."""
   id: ID!
-}
-
-"""Represents the user profile"""
-type Profile implements Node {
-  """The ID of an object"""
-  id: ID!
-  page: String!
-  pixKey: String!
-  description: String
-  socialMedia: SocialMedia
-}
-
-type SocialMedia {
-  instagram: String
-  linkedin: String
-  X: String
-  twitch: String
-  youtube: String
 }
 
 """A connection to a list of items."""
@@ -77,13 +59,22 @@ type ProfileEdge {
   cursor: String!
 }
 
-"""Represents a question asked"""
-type Question implements Node {
+"""Represents the user profile"""
+type Profile implements Node {
   """The ID of an object"""
   id: ID!
-  text: String!
-  answer: String
-  page: String
+  page: String!
+  pixKey: String!
+  description: String
+  socialMedia: SocialMedia
+  questions(after: String, first: Int, before: String, last: Int): QuestionConnection!
+}
+
+type SocialMedia {
+  instagram: String!
+  X: String!
+  twitch: String!
+  youtube: String!
 }
 
 """A connection to a list of items."""
@@ -102,6 +93,15 @@ type QuestionEdge {
 
   """A cursor for use in pagination"""
   cursor: String!
+}
+
+"""Represents a question asked"""
+type Question implements Node {
+  """The ID of an object"""
+  id: ID!
+  text: String
+  answer: String
+  page: String
 }
 
 """Represents an authenticating user"""
@@ -169,11 +169,10 @@ input ProfileRegisterMutationInput {
 }
 
 input SocialMediaInput {
-  instagram: String
-  linkedin: String
-  X: String
-  twitch: String
-  youtube: String
+  instagram: String!
+  X: String!
+  twitch: String!
+  youtube: String!
 }
 
 type QuestionCreateMutationPayload {
