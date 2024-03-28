@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     };
 
     const profile = preloadedQueries.createQuery;
-    console.log(profile);
+    
     if (!profile) {
       return {
         props: {},
