@@ -42,15 +42,12 @@ export default function AnswerCard({ question }: { question: AnswerCard$key }) {
         profileId: data.id
       },
       onError() {
-        toast.error("Uh oh! Something went wrong", {
-            description: "try again"
+        toast.error("Algo deu errado :(", {
+            description: "Tente novamente"
         })
       },
       onCompleted() {
-        
-        toast(`Profile created`, {
-            description: "You can receive some questions now",
-        })
+        toast(`Pergunta respondida!`)
       },
     });
   }

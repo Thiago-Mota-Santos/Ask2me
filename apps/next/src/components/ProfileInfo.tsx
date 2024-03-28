@@ -1,5 +1,5 @@
 import { Button } from "@repo/ui/button";
-import { Avatar, Box, Text } from "@repo/ui/index";
+import { Avatar, Box, Text, toast } from "@repo/ui/index";
 import Image from "next/image";
 import Link from "next/link";
 import { graphql, useFragment } from "react-relay";

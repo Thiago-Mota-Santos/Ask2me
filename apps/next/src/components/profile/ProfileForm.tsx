@@ -47,16 +47,16 @@ export default function ProfileForm () {
         socialMedia: form.socialMedia
       },
       onError() {
-        toast.error("Uh oh! Something went wrong", {
-            description: "try again"
-        })
+        toast.error("Algo deu errado :(", {
+          description: "Tente novamente"
+      })
       },
       onCompleted(response: {} | null) {
         const { profileRegisterMutation } = response as createProfileMutation$data;
         const page = profileRegisterMutation?.profileEdge?.node?.page
         
-        toast(`Profile created`, {
-            description: "You can receive some questions now",
+        toast(`Perfil criado 🥳`, {
+            description: "Mande seu perfil para as pessoas mandarem perguntas",
         })
         router.push(`/${page}`);
       },

@@ -50,9 +50,9 @@ export default function Register() {
         username,
       },
       onError() {
-        toast.error("Uh oh! Something went wrong", {
-            description: "User already exists, try again"
-        })
+        toast.error("Algo deu errado :(", {
+          description: "Falha na conexão"
+      })
       },
       onCompleted(response: {} | null) {
         const { userRegisterMutation } = response as registerMutation$data;

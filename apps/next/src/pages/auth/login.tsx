@@ -42,13 +42,13 @@ export default function Login() {
       },
       onError(error) {
         if (error.name === 'TypeError'){
-            toast.error("Uh oh! Something went wrong", {
-                description: "Connection failed",
-            })
-        } 
-        toast.error("Uh oh! Something went wrong", {
-            description: "Login failed",
+          toast.error("Algo deu errado :(", {
+            description: "Falha na conexão"
         })
+        } 
+        toast.error("Algo deu errado :(", {
+          description: "Falha na conexão"
+      })
       },
       onCompleted(response: {} | null) {
         const { userLoginMutation } = response as loginMutation$data;
