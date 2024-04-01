@@ -25,7 +25,7 @@ const profile: GraphQLFieldConfig<any, any, any> = {
   resolve: async (_root, _args, context) => {
     const user = context.user;
     if (!user) {
-      throw new Error('User not authenticated');
+      return 
     }
 
     const profileId = user._id; 
