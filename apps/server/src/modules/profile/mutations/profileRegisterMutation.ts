@@ -29,16 +29,16 @@ const profileRegisterMutation = mutationWithClientMutationId({
     const { page, pixKey, description, socialMedia } = args
     console.log(ctx.user)
     
-    if (!ctx.user) {
-      throw new Error('You must be logged in')
-    }
+    // if (!ctx.user) {
+    //   throw new Error('You must be logged in')
+    // }
 
     const newProfile = await new ProfileModel({
         page,
         pixKey,
         description,
         socialMedia,
-        profileId: ctx.user._id
+        profileId: ctx?.user?._id
     }).save()
     return {
       id: newProfile._id.toString(),
