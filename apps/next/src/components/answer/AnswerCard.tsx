@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import { AnswerCard$data, AnswerCard$key } from "@/__generated__/AnswerCard.graphql";
+import { AnswerCard$key } from "@/__generated__/AnswerCard.graphql";
 import { Button } from "@repo/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@repo/ui/card";
 import { Avatar, Box, Form, Text, Textarea, toast } from "@repo/ui/index";
@@ -18,28 +18,37 @@ const resolver = yupResolver(questionSchema);
 type FormValues = yup.InferType<typeof questionSchema>;
 
 const AnswerCardFragment = graphql`
-  fragment AnswerCard on Question {
-    page
-    id
-    text
-    answer
+  fragment AnswerCard on Query {
+    question(profileId: $profileId) {
+      id
+      text
+      answer
+      page
+    }
+    profile {
+      id
+      page
+      pixKey
+    }
   }
 `;
 
 export default function AnswerCard({ question }: { question: AnswerCard$key }) {
   const router = useRouter()
-  const data = useFragment(AnswerCardFragment,question); 
+  const data = useFragment(AnswerCardFragment, question); 
   const { register, handleSubmit } = useForm<FormValues>({
     resolver,
-});
+  });
 
-  const [request] = useMutation(createAnswerMutation)
+  const [request] = useMutation(createAnswerMutation);
+
+  const isAuthenticated = data.profile != null;
 
   function onSubmit({ answer }: FormValues) {
     request({
       variables: {
         answer,
-        profileId: data.id
+        profileId: data.question?.id
       },
       onError() {
         toast.error("Algo deu errado :(", {
@@ -52,7 +61,6 @@ export default function AnswerCard({ question }: { question: AnswerCard$key }) {
     });
   }
    
-  
   return (
     <Box className="h-screen bg-gray-200 flex items-center justify-center">
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -69,7 +77,7 @@ export default function AnswerCard({ question }: { question: AnswerCard$key }) {
           </Box>
           <Box className="space-y-2">
             <Box className="flex flex-row justify-center items-center px-6">
-              <Text color="gray" weight="bold">{data.page?.slice(1)}</Text>
+              <Text color="gray" weight="bold">{data?.question?.page?.slice(1)}</Text>
             </Box>
           </Box>
           <CardContent className="flex flex-col mt-10 items-center justify-center gap-6">
@@ -79,42 +87,49 @@ export default function AnswerCard({ question }: { question: AnswerCard$key }) {
                     <Text color="orange" weight="bold" size="5">Pergunta</Text>
                 </CardTitle>
                 <CardContent>
-                    <Text weight="bold">{data.text}</Text>
+                    <Text weight="bold">{data?.question?.text}</Text>
                 </CardContent>
               </Card>
             </Box>
             
-            {!data.answer ?
-            <>
-             <Text size="5" weight="bold">Escreva a sua resposta</Text> 
-             <Textarea
-              rows={5}
-              maxLength={300}
-              className="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-10/12 p-2.5"
-              placeholder="Escreva uma resposta"
-              {...register('answer')}
-              />
-             </>
-            : 
-            <Card className="flex flex-col items-center max-h-40 overflow-y-auto bg-gray-200">
+            {isAuthenticated && !data?.question?.answer && (
+              <>
+                <Text size="5" weight="bold">Escreva a sua resposta</Text> 
+                <Textarea
+                  rows={5}
+                  maxLength={300}
+                  className="bg-gray-50 resize-none border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-10/12 p-2.5"
+                  placeholder="Escreva uma resposta"
+                  {...register('answer')}
+                />
+              </>
+            )}
+            
+            {data?.question?.answer && (
+              <Card className="flex flex-col items-center max-h-40 overflow-y-auto bg-gray-200">
                 <CardTitle>
                     <Text color="orange" weight="bold" size="5">Resposta</Text>
                 </CardTitle>
                 <CardContent>
-                    <Text weight="bold">{data.answer}</Text>
+                    <Text weight="bold">{data?.question?.answer}</Text>
                 </CardContent>
-            </Card>
-            }
+              </Card>
+            )}
+            
           </CardContent>
           <CardFooter>
-            {!data.answer ? <Button type='submit' className="bg-orange-500 w-full p-3 hover:bg-orange-600">
-              responder
-            </Button>
-          : <Button onClick={() => router.push('/')} className='bg-orange-500 w-full p-3 hover:bg-orange-600'>Voltar para o menu</Button>  
-          }
+            {isAuthenticated && !data?.question?.answer ? (
+              <Button type='submit' className="bg-orange-500 w-full p-3 hover:bg-orange-600">
+                responder
+              </Button>
+            ) : (
+              <Button onClick={() => router.push('/')} className='bg-orange-500 w-full p-3 hover:bg-orange-600'>
+                Voltar para o menu
+              </Button>  
+            )}
           </CardFooter>
         </Card>
-       </Form>
-     </Box>
+      </Form>
+    </Box>
   )
 }
