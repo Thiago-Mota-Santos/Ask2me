@@ -20,9 +20,7 @@ type UserCardProps = {
 
 const CardQuery = graphql`
   query QuestionPageQuery ($profileId: String!) {
-    question (profileId: $profileId) {
      ...AnswerCard
-  }
 }
 `;
 
@@ -31,8 +29,7 @@ export default function QuestionCard({ queryRefs }: UserCardProps) {
   const profileId = path.split('/')[2]
   const data = usePreloadedQuery(CardQuery, queryRefs.questionQuery);
   
-  const { question } = data;
-  if(!question) return 
+  if(!data) return 
   
   return (
     <>
@@ -43,7 +40,7 @@ export default function QuestionCard({ queryRefs }: UserCardProps) {
       <meta property="og:image" content={`${url}/api/og`} />
       <meta property="og:url" content={`${url}${path}`} />
     </Head>
-    <AnswerCard question={question} />
+    <AnswerCard question={data} />
   </>
   )
 }
