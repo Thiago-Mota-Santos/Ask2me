@@ -8,6 +8,9 @@ interface DataLoaders {
   QuestionLoader: ReturnType<
     typeof import('../question/questionLoader').QuestionLoader.getLoader
   >
+  QrCodeLoader: ReturnType<
+    typeof import('../qrcode/qrcodeLoader').QrCodeLoader.getLoader
+>
 }
 
 type Loaders = { [Name in keyof DataLoaders]: () => DataLoaders[Name] } | Record<string, () => unknown>;
