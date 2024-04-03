@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e7a8fbe082d010f9817c2979b29bd27>>
+ * @generated SignedSource<<47aafbf8194d8008575f8932bfef92e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AnswerCard$data = {
-  readonly answer: string | null | undefined;
-  readonly id: string;
-  readonly page: string | null | undefined;
-  readonly text: string | null | undefined;
+  readonly profile: {
+    readonly id: string;
+    readonly page: string;
+    readonly pixKey: string;
+  } | null | undefined;
+  readonly question: {
+    readonly answer: string | null | undefined;
+    readonly id: string;
+    readonly page: string | null | undefined;
+    readonly text: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AnswerCard";
 };
 export type AnswerCard$key = {
@@ -22,45 +29,91 @@ export type AnswerCard$key = {
   readonly " $fragmentSpreads": FragmentRefs<"AnswerCard">;
 };
 
-const node: ReaderFragment = {
-  "argumentDefinitions": [],
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "page",
+  "storageKey": null
+};
+return {
+  "argumentDefinitions": [
+    {
+      "kind": "RootArgument",
+      "name": "profileId"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "AnswerCard",
   "selections": [
     {
       "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "page",
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "profileId",
+          "variableName": "profileId"
+        }
+      ],
+      "concreteType": "Question",
+      "kind": "LinkedField",
+      "name": "question",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "text",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "answer",
+          "storageKey": null
+        },
+        (v1/*: any*/)
+      ],
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "text",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "answer",
+      "concreteType": "Profile",
+      "kind": "LinkedField",
+      "name": "profile",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/),
+        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "pixKey",
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     }
   ],
-  "type": "Question",
+  "type": "Query",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "f399cba95b4b024add135e5206822b96";
+(node as any).hash = "f0b7d23eee50f5612b8896cc9510a153";
 
 export default node;
