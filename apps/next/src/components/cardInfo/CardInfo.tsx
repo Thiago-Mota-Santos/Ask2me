@@ -14,6 +14,9 @@ import NotFoundPage from '../notFoundPage';
 import { Input } from '@repo/ui/input';
 import { fiatFormat } from '@/utils/fiatFormat';
 import { ChangeEvent, useState } from 'react';
+import CardQuestion from './CardQuestion';
+import { QrCodeRegisterMutationType, createQrCodeMutation } from './createQrCode';
+import { createQrCodeMutation$data } from '@/__generated__/createQrCodeMutation.graphql';
 
 
 const questionSchema = yup.object({
@@ -31,6 +34,7 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
   });
 
   const [request] = useMutation(createQuestionMutation)
+  const [qrcodeRequest] = useMutation(createQrCodeMutation)
 
   const data = useFragment(
     graphql`
@@ -49,7 +53,9 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
     const path = usePathname()
     // todo: this state will be used when payment via pix is enabled
     const [sliderValue, setSliderValue] = useState(0.10);
-    
+    const [currentPage, setCurrentPage] = useState(1)
+    const [qrcodeDetails, setQrcodeDetails] = useState<QrCodeRegisterMutationType | null | undefined>()
+
     const handleSliderChange = (e: ChangeEvent<HTMLInputElement>) => {
       const newValue = parseFloat(e.target.value);
       setSliderValue(newValue);
@@ -65,6 +71,7 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
     }
   
     function onSubmit({ text }: FormValues) {
+      
       request({
         variables: {
           page: path,
@@ -85,11 +92,35 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
         },
       });
     }
+    
+    const handleGenerateQrCode = () => {
+      setCurrentPage(prev => prev + 1)
+      qrcodeRequest({
+        variables: {
+          name: `qr code ${Math.random()}`,
+          // 0.1 * 10 = 1 cents
+          value: sliderValue * 10
+        },
+        onError() {
+          toast.error("Algo deu errado :(", {
+            description: "Tente novamente"
+        })
+        },
+        onCompleted(response: {} | null) {
+          const { QrCodeRegisterMutation } = response as createQrCodeMutation$data;
+          setQrcodeDetails(QrCodeRegisterMutation)
+        },
+        
+      });
+    }
 
     return (
-      <Box className="h-screen flex items-center justify-center">
-        <Form onSubmit={handleSubmit(onSubmit)}>
+      <>
+        {currentPage === 1 
+         ?
+         <Box className="h-screen flex items-center justify-center">
         <Card className="w-[400px] bg-gray-100">
+        <Form onSubmit={handleSubmit(onSubmit)}>
           <Box className="flex items-center justify-center">
             <Avatar
               width={80}
@@ -120,13 +151,18 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
               {...register('text')}
             />
           </CardContent>
+        </Form>
           <CardFooter>
-            <Button type="submit" className="bg-orange-500 w-full p-3 hover:bg-orange-600">
+            <Button onClick={handleGenerateQrCode} className="bg-orange-500 w-full p-3 hover:bg-orange-600">
               Perguntar
             </Button>
           </CardFooter>
         </Card>
-        </Form>
       </Box>
+         : 
+          <CardQuestion profileEdge={qrcodeDetails} /> 
+        }
+      
+      </>
     );
   }
