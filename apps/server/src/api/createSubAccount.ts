@@ -1,33 +1,17 @@
 
-export type PixQrCodePostPayload = {
-  name: string;
-  identifier: string;
-  correlationID: string;
-  value?: number;
-};
-
-export type PixQrCode = {
-  name: string;
-  value?: number;
-  identifier: string;
-  correlationID: string;
-  paymentLinkID: string;
-  createdAt: string;
-  updatedAt: string;
-  brCode: string;
-  paymentLinkUrl: string;
-  qrCodeImage: string;
+export type SubAccount = {
+  pixKey: string
+  name: string
 };
 
 type ResponsePayload = {
-  pixQrCode: PixQrCode;
-  error?: string
+  pixQrCode: SubAccount;
 };
 
-export const pixQrCodePost = async ({
+export const createSubAccount = async ({
   payload,
 }: {
-  payload: PixQrCodePostPayload;
+  payload: SubAccount;
 }): Promise<ResponsePayload> => {
   const url = `${process.env.API_URL_WOOVI}/v1/qrcode-static`;
 

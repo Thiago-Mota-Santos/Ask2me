@@ -7,16 +7,10 @@ export type PixQrCodePostPayload = {
 };
 
 export type PixQrCode = {
-  name: string;
-  value?: number;
-  identifier: string;
+  value: number;
+  destinationAlias: string;
+  destinationAliasType: string;
   correlationID: string;
-  paymentLinkID: string;
-  createdAt: string;
-  updatedAt: string;
-  brCode: string;
-  paymentLinkUrl: string;
-  qrCodeImage: string;
 };
 
 type ResponsePayload = {
@@ -24,12 +18,12 @@ type ResponsePayload = {
   error?: string
 };
 
-export const pixQrCodePost = async ({
+export const qrCodePayment = async ({
   payload,
 }: {
   payload: PixQrCodePostPayload;
 }): Promise<ResponsePayload> => {
-  const url = `${process.env.API_URL_WOOVI}/v1/qrcode-static`;
+  const url = `${process.env.API_URL_WOOVI}/v1/payment`;
 
   try {
     const response = await fetch(url, {
