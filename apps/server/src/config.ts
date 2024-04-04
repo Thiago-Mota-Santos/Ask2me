@@ -11,7 +11,9 @@ dotenvSafe.config({
 });
 
 export const config = {
- APP_ID_WOOVI: process.env.APP_ID_WOOVI,
- API_URL_WOOVI: process.env.API_URL_WOOVI
+ WEBHOOK_SECRET: '123',
+ WEBHOOK_PUBLIC_KEY: process.env.WEBHOOK_PUBLIC_KEY as string,
+ APP_ID_WOOVI: process.env.APP_ID_WOOVI as string,
+ API_URL_WOOVI: process.env.API_URL_WOOVI as string
 } 
 
