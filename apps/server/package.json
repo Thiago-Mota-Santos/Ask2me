@@ -11,7 +11,6 @@
     "fixture:user": "tsx src/modules/User/fixture/createUser.ts",
     "fixture:profile": "tsx src/modules/Profile/fixture/createProfile.ts",
     "qrcode": "tsx scripts/qrcodePost.ts",
-    "subacc": "tsx scripts/subAccountPost.ts",
     "charge": "tsx scripts/chargePostRun.ts",
     "build": "tsup src"
   },
