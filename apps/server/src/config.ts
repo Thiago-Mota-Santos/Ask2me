@@ -7,7 +7,7 @@ const root = path.join.bind(cwd);
 
 dotenvSafe.config({
   path: root('.env'),
-  sample: root('.env.example'),
+  // sample: root('.env.example'), -> FIX: .env.example doesn't not working in production
 });
 
 export const config = {
