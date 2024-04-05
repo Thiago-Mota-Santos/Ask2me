@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 import { ParameterizedContext } from 'koa'
 import { UserDocument, UserModel } from './modules/user/userModel'

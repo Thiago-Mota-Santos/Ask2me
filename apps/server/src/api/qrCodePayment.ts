@@ -1,4 +1,5 @@
 
+import 'dotenv/config'
 export type PixQrCodePostPayload = {
   name: string;
   identifier: string;

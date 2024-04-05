@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import type { Context } from 'koa';
 
 export const isWebhookAuthorizationValid = (ctx: Context) => {
