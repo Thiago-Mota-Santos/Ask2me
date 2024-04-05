@@ -8,6 +8,7 @@ import Router from '@koa/router'
 import { getUser } from './auth'
 import { getContext } from './getContext'
 import { schema } from './schema/schema'
+import { webhookPost } from './api/webhook/webhookPost'
 
 const router = new Router()
 const app = new Koa()
@@ -56,6 +57,8 @@ router.all(
     endpoint: '/',
   }),
 )
+
+router.post('/webhook', webhookPost);
 
 app.use(cors({ credentials: true }))
 app.use(logger())
