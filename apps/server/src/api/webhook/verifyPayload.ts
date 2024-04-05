@@ -1,3 +1,5 @@
+import 'dotenv/config'
+
 import crypto from 'crypto'
 
 export const algorithm = 'sha256';
