@@ -28,7 +28,7 @@ export default function QuestionCard({ queryRefs }: UserCardProps) {
   const path = usePathname()
   const profileId = path.split('/')[2]
   const data = usePreloadedQuery(CardQuery, queryRefs.questionQuery);
-  
+
   if(!data) return 
   
   return (
@@ -37,7 +37,7 @@ export default function QuestionCard({ queryRefs }: UserCardProps) {
       <title>Recebi uma pergunta: </title>
       <meta property="og:title" content="Pergunta" />
       <meta property="og:description" content="Faça uma pergunta você também" />
-      <meta property="og:image" content={`${url}/api/og`} />
+      <meta property="og:image" content={`${url}/api/og?profileId=${profileId}`} />
       <meta property="og:url" content={`${url}${path}`} />
     </Head>
     <AnswerCard question={data} />
