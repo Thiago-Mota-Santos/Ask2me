@@ -11,7 +11,9 @@
     "./icons": "./src/icons.tsx",
     "./avatar": "./src/avatar.tsx",
     "./input": "./src/input.tsx",
-    "./index": "./src/index.ts"
+    "./index": "./src/index.ts",
+    "./skeleton": "./src/skeleton.tsx"
+
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
