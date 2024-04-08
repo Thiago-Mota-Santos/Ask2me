@@ -1,5 +1,5 @@
 import { fetchGraphQL } from '@/relay/environment';
-import { ImageResponse } from 'next/og';
+import { ImageResponse } from '@vercel/og';
 import { NextRequest } from 'next/server';
 
 export const config = {
@@ -26,6 +26,7 @@ export default async function handler(req: NextRequest) {
     (
       <div
         style={{
+          fontSize: 128,
           height: '100%',
           width: '100%',
           display: 'flex',
