@@ -14,6 +14,7 @@ import NotFoundPage from '../notFoundPage';
 import { Input } from '@repo/ui/input';
 import { fiatFormat } from '@/utils/fiatFormat';
 import { ChangeEvent, useState } from 'react';
+import Link from 'next/link';
 // import CardQuestion from './CardQuestion';
 // import { QrCodeRegisterMutationType, createQrCodeMutation } from './createQrCode';
 // import { createQrCodeMutation$data } from '@/__generated__/createQrCodeMutation.graphql';
@@ -121,8 +122,10 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
          <Box className="h-screen flex items-center justify-center">
         <Card className="w-[400px] bg-gray-100">
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Box className="flex items-center justify-center">
-            <Avatar
+        <Link href="/">
+          <Box className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
+             <Avatar
+             className=''
               width={80}
               height={80}
               radius="full"
@@ -130,12 +133,14 @@ export default function CardInfo({ profiles }: { profiles: CardInfo_card$key }) 
               size="8"
               src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.pngall.com%2Fwp-content%2Fuploads%2F5%2FProfile-Avatar-PNG.png&f=1&nofb=1&ipt=72628782de083ad2a23e36b3cf2a00927726d0c58b0715cc3cc7203360b66be9&ipo=images"
             />
+            
           </Box>
           <Box className="space-y-2">
             <Box className="flex flex-row justify-center items-center px-6">
               <Text color="gray" weight="bold">{path.slice(1)}</Text>
             </Box>
           </Box>
+          </Link>
           <CardContent className="flex flex-col mt-10 items-center justify-center gap-6">
             <Box className="w-full gap-1 flex flex-col items-center justify-center">
               <Text weight="bold" className="text-gray-600">{`R$ ${fiatFormat(sliderValue)}`}</Text> *

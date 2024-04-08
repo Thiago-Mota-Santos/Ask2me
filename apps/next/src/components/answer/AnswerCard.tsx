@@ -8,6 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { createAnswerMutation } from './createAnswer';
 import { useRouter } from "next/navigation"
+import Link from 'next/link';
 
 const questionSchema = yup.object({
     answer: yup.string().required('Required').trim(),
@@ -43,7 +44,7 @@ export default function AnswerCard({ question }: { question: AnswerCard$key }) {
   const [request] = useMutation(createAnswerMutation);
 
   const isAuthenticated = data.profile != null;
-
+  
   function onSubmit({ answer }: FormValues) {
     request({
       variables: {
@@ -62,10 +63,11 @@ export default function AnswerCard({ question }: { question: AnswerCard$key }) {
   }
    
   return (
-    <Box className="h-screen bg-gray-200 flex items-center justify-center">
+    <Box className="h-screen bg-white flex items-center justify-center">
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Card className="w-[400px] bg-gray-100">
-          <Box className="flex items-center justify-center">
+          <Link href="/">
+          <Box className="flex items-center justify-center hover:scale-105 transition-transform duration-300">
             <Avatar
               width={80}
               height={80}
@@ -80,6 +82,7 @@ export default function AnswerCard({ question }: { question: AnswerCard$key }) {
               <Text color="gray" weight="bold">{data?.question?.page?.slice(1)}</Text>
             </Box>
           </Box>
+          </Link>
           <CardContent className="flex flex-col mt-10 items-center justify-center gap-6">
             <Box className="w-full rounded-lg gap-1 flex flex-col items-center justify-center">
               <Card className="flex flex-col items-center max-h-40 overflow-y-auto bg-gray-200">
