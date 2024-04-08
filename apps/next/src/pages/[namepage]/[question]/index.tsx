@@ -41,6 +41,10 @@ export default function QuestionCard({ queryRefs }: UserCardProps) {
       <meta property="og:url" content={`${url}${path}`} />
       <meta property="og:image:width" content="2332"/>
       <meta property="og:image:height" content="1166"/>
+      <meta name="twitter:image" content={`${url}/api/og?profileId=${profileId}`} />
+      <meta name="twitter:image:type" content="image/png" />
+      <meta name="twitter:image:width" content="2332" />
+      <meta name="twitter:image:height" content="1166" />
     </Head>
     <AnswerCard question={data} />
   </>
