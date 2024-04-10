@@ -27,4 +27,14 @@ const generateJwtToken = (user: UserDocument) => {
   return `JWT ${jwt.sign({ id: user._id }, JWT_KEY)}`
 }
 
-export { getUser, generateJwtToken }
+const setCookie = (ctx: ParameterizedContext, user: UserDocument) => {
+  ctx.cookies.set(JWT_KEY, generateJwtToken(user), {
+    sameSite: 'lax',
+    httpOnly: true,
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: false,
+    signed: false,
+  });
+}
+
+export { getUser, generateJwtToken, setCookie }
