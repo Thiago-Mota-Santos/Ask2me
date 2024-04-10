@@ -27,10 +27,10 @@ const profileRegisterMutation = mutationWithClientMutationId({
 
   mutateAndGetPayload: async (args: Profile, ctx: GraphQLContext) => {
     const { page, pixKey, description, socialMedia } = args
-    
-    // if (!ctx.user) {
-    //   throw new Error('You must be logged in')
-    // }
+    console.log("context user: " +  ctx.user)
+    if (!ctx.user) {
+      throw new Error('You must be logged in')
+    }
 
     const newProfile = await new ProfileModel({
         page,
