@@ -1,6 +1,6 @@
 
 import 'dotenv/config'
-import { config } from '../config';
+
 export type PixQrCodePostPayload = {
   name: string;
   identifier: string;
@@ -20,12 +20,13 @@ type ResponsePayload = {
   error?: string
 };
 
+
 export const qrCodePayment = async ({
   payload,
 }: {
   payload: PixQrCodePostPayload;
 }): Promise<ResponsePayload> => {
-  const url = `${config.API_URL_WOOVI}/v1/payment`;
+  const url = `${process.env.API_URL_WOOVI}/v1/payment`;
 
   try {
     const response = await fetch(url, {

@@ -1,5 +1,5 @@
-import { config } from "../config";
 
+import 'dotenv/config'
 export type SubAccount = {
   pixKey: string
   name: string
@@ -14,7 +14,7 @@ export const createSubAccount = async ({
 }: {
   payload: SubAccount;
 }): Promise<ResponsePayload> => {
-  const url = `${config.API_URL_WOOVI}/v1/qrcode-static`;
+  const url = `${process.env.API_URL_WOOVI}/v1/qrcode-static`;
 
   try {
     const response = await fetch(url, {
@@ -22,7 +22,7 @@ export const createSubAccount = async ({
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: config.APP_ID_WOOVI as string,
+        Authorization: process.env.APP_ID_WOOVI as string,
       },
       body: JSON.stringify(payload),
     });
