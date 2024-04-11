@@ -16,8 +16,8 @@ it('should be able create an user profile', async () => {
   const user = await createUser()
   const { page, description, pixKey, socialMedia } =
     await createProfile({
-      page: 'xx',
-      pixKey: "31314104194184184818481481",
+      page: 'xxx31x31x3',
+      pixKey: "31314x104194184184818481481",
       description: "Responderei qualquer pergunta",
       socialMedia: {
       instagram: "thiagoinsta@313",
@@ -47,7 +47,6 @@ it('should be able create an user profile', async () => {
             description
             socialMedia {
                 instagram
-                linkedin
                 X
                 twitch
                 youtube
@@ -71,7 +70,7 @@ it('should be able create an user profile', async () => {
     variableValues,
     contextValue: getContext({ user }),
   })
-
+  console.log(result)
   expect(result.errors).toBeUndefined()
 
   const { profileEdge } = result?.data?.profileRegisterMutation!;

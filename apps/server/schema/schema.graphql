@@ -122,6 +122,9 @@ type Mutation {
   profileRegisterMutation(input: ProfileRegisterMutationInput!): ProfileRegisterMutationPayload
   questionCreateMutation(input: QuestionCreateMutationInput!): QuestionCreateMutationPayload
   answerRegisterMutation(input: AnswerRegisterMutationInput!): AnswerRegisterMutationPayload
+
+  """add a new qrcode"""
+  QrCodeRegisterMutation(input: QrCodeRegisterInput!): QrCodeRegisterPayload
 }
 
 type UserLoginMutationPayload {
@@ -195,5 +198,38 @@ type AnswerRegisterMutationPayload {
 input AnswerRegisterMutationInput {
   answer: String!
   profileId: String!
+  clientMutationId: String
+}
+
+type QrCodeRegisterPayload {
+  profileEdge: QrCodeEdge
+  clientMutationId: String
+}
+
+"""An edge in a connection."""
+type QrCodeEdge {
+  """The item at the end of the edge"""
+  node: QrCode
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""Represents the generated QRCode"""
+type QrCode implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String!
+  identifier: String!
+  correlationID: String!
+  value: Float!
+  brcode: String!
+  status: String!
+  image: String
+}
+
+input QrCodeRegisterInput {
+  name: String!
+  value: Int
   clientMutationId: String
 }

@@ -4,6 +4,8 @@ import { getObjectId, successField } from '@entria/graphql-mongo-helpers';
 import { QuestionConnection } from '../questionType';
 import { QuestionModel } from '../questionModel';
 import { ProfileModel } from '../../profile/profileModel';
+import crypto from 'node:crypto';
+import { pixQrCodePost } from '../../../api/qrCodePost';
 
 const questionCreateMutation = mutationWithClientMutationId({
   name: 'QuestionCreateMutation',
@@ -13,10 +15,20 @@ const questionCreateMutation = mutationWithClientMutationId({
     page: { type: GraphQLString}
   },
   mutateAndGetPayload: async ({ text, profileId, page }) => {
+    const uuid = crypto.randomBytes(16).toString('hex');
     const profile = await ProfileModel.findById(getObjectId(profileId));
+    
     if (!profile) {
         throw new Error('Profile does not found');
     }
+
+    const payload = {
+      name: `qr code ${Math.random()}`,
+      identifier: uuid.replace(/-/g, '').slice(0, 25),
+      correlationID: uuid,
+    };
+
+    const response = await pixQrCodePost({ payload });
     
     const newQuestion = await new QuestionModel({
       page,

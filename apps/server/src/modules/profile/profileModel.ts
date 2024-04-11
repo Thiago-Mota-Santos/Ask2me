@@ -1,5 +1,5 @@
 import { QuestionConnection } from './../question/questionType';
-import mongoose, { Document, Types, Schema } from 'mongoose'
+import mongoose, { Document, Schema, Types } from 'mongoose'
 import { Maybe } from '../../../../../packages/types/src/Maybe'
 
 export type Profile = {
@@ -69,14 +69,14 @@ const ProfileSchema = new mongoose.Schema<Profile>(
   },
 )
 
-ProfileSchema.pre<Profile>('save', async function (next) {
-  const existingProfile = await ProfileModel.findOne({ page: this.page });
-  if (existingProfile && !existingProfile._id.equals(this._id)) {
-    const error = new Error('Já existe um perfil com esta página.');
-    next(error);
-  }
-  next()
-});
+// ProfileSchema.pre<Profile>('save', async function (next) {
+//   const existingProfile = await ProfileModel.findOne({ page: this.page });
+//   if (existingProfile && !existingProfile._id.equals(this._id)) {
+//     const error = new Error('Já existe um perfil com esta página.');
+//     next(error);
+//   }
+//   next()
+// });
 
 export const ProfileModel = mongoose.model<ProfileDocument>('Profile', ProfileSchema)
 
