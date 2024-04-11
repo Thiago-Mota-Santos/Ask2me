@@ -11,13 +11,13 @@ const getUser = async (
 ): Promise<{ user: Maybe<UserDocument> }> => {
   const token = ctx.cookies.get('token')
   const test = ctx.cookies.get('vercel-token')
-  console.log("test " + test)
   console.log("token: " + token)
   try {
     if (!token) return { user: null }
     const subToken = token.replace('JWT%20', '')
     const decodedToken = jwt.verify(subToken, JWT_KEY)
     const decodedId = decodedToken as { id: string }
+    console.log(decodedId)
     const user = await UserModel.findOne({ _id: decodedId.id })
     return { user }
   } catch (err) {
