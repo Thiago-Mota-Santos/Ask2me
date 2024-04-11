@@ -10,7 +10,7 @@ const getUser = async (
   ctx: ParameterizedContext,
 ): Promise<{ user: Maybe<UserDocument> }> => {
   const token = ctx.cookies.get('token')
-  console.log(token)
+  console.log("token: " + token)
   try {
     if (!token) return { user: null }
     const subToken = token.replace('JWT%20', '')
@@ -27,14 +27,4 @@ const generateJwtToken = (user: UserDocument) => {
   return `JWT ${jwt.sign({ id: user._id }, JWT_KEY)}`
 }
 
-const setCookie = (ctx: ParameterizedContext, user: UserDocument) => {
-  ctx.cookies.set(JWT_KEY, generateJwtToken(user), {
-    sameSite: 'lax',
-    httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24,
-    secure: false,
-    signed: false,
-  });
-}
-
-export { getUser, generateJwtToken, setCookie }
+export { getUser, generateJwtToken }
