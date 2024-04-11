@@ -1,7 +1,8 @@
 import mongoose from 'mongoose'
 import 'dotenv/config'
+import { config } from './config'
 
-const URI = process.env.MONGO_URI as string
+const URI = config.MONGO_URI
 
 async function connectDatabase() {
   mongoose.connection

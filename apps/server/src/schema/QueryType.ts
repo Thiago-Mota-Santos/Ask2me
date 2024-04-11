@@ -1,5 +1,3 @@
-import { QrCodeLoader } from './../modules/qrcode/qrcodeLoader';
-import { Question } from './../modules/question/questionModel';
 import { QuestionLoader } from './../modules/question/questionLoader';
 import { GraphQLFieldConfig, GraphQLNonNull, GraphQLObjectType, GraphQLString } from 'graphql'
 import { nodeField, nodesField } from '../node/typeRegister'
@@ -12,20 +10,12 @@ import { ProfileLoader } from '../modules/profile/profileLoader'
 import { QuestionConnection, QuestionType } from '../modules/question/questionType'
 import { QuestionModel } from '../modules/question/questionModel'
 import { Types } from 'mongoose'
-import { QrCodeConnection } from '../modules/qrcode/qrcodeType';
 
 const profiles: GraphQLFieldConfig<any, any, any> = {
   type: new GraphQLNonNull(ProfileConnection.connectionType),
   args: { ...connectionArgs },
   resolve: async (_root, _args, context) =>
     await ProfileLoader.loadAll(context, _args),
-}
-
-const qrCodes: GraphQLFieldConfig<any, any, any> = {
-  type: new GraphQLNonNull(QrCodeConnection.connectionType),
-  args: { ...connectionArgs },
-  resolve: async (_root, _args, context) =>
-    await QrCodeLoader.loadAll(context, _args),
 }
 
 
@@ -115,7 +105,6 @@ export const QueryType = new GraphQLObjectType({
   fields: () => ({
     node: nodeField,
     nodes: nodesField,
-    qrCodes,
     profiles,
     question,
     profile,

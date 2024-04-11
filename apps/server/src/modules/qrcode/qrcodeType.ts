@@ -25,6 +25,14 @@ export const QrCodeType = new GraphQLObjectType<QrCode>({
         type: new GraphQLNonNull(GraphQLFloat),
         resolve: (qrcode) => qrcode.value,
       },
+      brcode: {
+        type: new GraphQLNonNull(GraphQLString),
+        resolve: (qrcode) => qrcode.brcode
+      },
+      status: {
+        type: new GraphQLNonNull(GraphQLString),
+        resolve: (qrcode) => qrcode.status
+      },
       image: {
         type: GraphQLString,
         resolve: async (qrCode, _, __) => {

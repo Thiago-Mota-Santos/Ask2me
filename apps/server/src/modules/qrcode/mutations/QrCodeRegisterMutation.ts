@@ -31,7 +31,6 @@ const QrCodeRegisterMutation = mutationWithClientMutationId({
         throw new Error(error)
       }
 
-
     return {
       id: qrCode?._id.toString(),
       success: 'New qrcode has been created',

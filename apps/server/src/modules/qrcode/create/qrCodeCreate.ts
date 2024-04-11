@@ -1,6 +1,6 @@
 import { getDefaultIdentifier, uuid } from "../../../../test/getDefaultIdentifier";
 import { pixQrCodePost } from "../../../api/qrCodePost";
-import { QrCodeModel } from "../qrcodeModel";
+import { PAYMENT_STATUS, QrCodeModel } from "../qrcodeModel";
 
 type HandleQrCodeCreateArgs = {
   name: string;
@@ -20,7 +20,6 @@ export const qrCodeCreate = async ({ name, value }: HandleQrCodeCreateArgs) => {
     },
   });
 
-  console.log(result)
 
   if (result.error) {
     return {
@@ -35,9 +34,11 @@ export const qrCodeCreate = async ({ name, value }: HandleQrCodeCreateArgs) => {
     identifier: pixQrCode.identifier,
     correlationID: pixQrCode.correlationID,
     image: pixQrCode?.qrCodeImage,
-    value: pixQrCode?.value
+    value: pixQrCode?.value,
+    brcode: pixQrCode?.brCode,
+    status: PAYMENT_STATUS.OPEN
   }).save();
-  console.log(qrCode)
+
   return {
     qrCode,
   };

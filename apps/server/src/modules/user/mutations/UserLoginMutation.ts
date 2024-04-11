@@ -1,11 +1,10 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { successField } from '@entria/graphql-mongo-helpers'
-import { generateJwtToken, setCookie } from '../../../auth'
+import { generateJwtToken } from '../../../auth'
 import { UserLoader } from '../userLoader'
 import { UserModel } from '../userModel'
 import { UserType } from '../userType'
-import { GraphQLContext } from '../../../graphql/context'
 
 interface UserLogin {
   email: string
@@ -22,7 +21,7 @@ const userLoginMutation = mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLString),
     },
   },
-  mutateAndGetPayload: async (args: UserLogin, { ctx }: GraphQLContext) => {
+  mutateAndGetPayload: async (args: UserLogin) => {
     const { email, password } = {
       password: args.password.trim(),
       email: args.email.trim().toLowerCase(),
@@ -38,19 +37,19 @@ const userLoginMutation = mutationWithClientMutationId({
     if (!passwordIsCorrect) {
       throw new Error('Password is incorrect!')
     }
-    
-    setCookie(ctx, user)
-    
+    const token = generateJwtToken(user._id)
+
     return {
       id: user._id,
+      token,
       success: 'Login In successfully',
     }
   },
   outputFields: {
-    // token: {
-    //   type: GraphQLString,
-    //   resolve: ({ token }) => token,
-    // },
+    token: {
+      type: GraphQLString,
+      resolve: ({ token }) => token,
+    },
     me: {
       type: UserType,
       resolve: async ({ id }, _, context) => {

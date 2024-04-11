@@ -5,6 +5,7 @@ import { ProfileConnection } from '../profileType'
 import { Profile, ProfileModel } from '../profileModel'
 import { successField } from '@entria/graphql-mongo-helpers'
 import { ProfileLoader } from '../profileLoader'
+import { debugConsole } from '../../../../test/debubConsole'
 
 const profileRegisterMutation = mutationWithClientMutationId({
   name: 'ProfileRegisterMutation',
@@ -25,9 +26,10 @@ const profileRegisterMutation = mutationWithClientMutationId({
     },
   },  
 
-  mutateAndGetPayload: async (args: Profile, ctx: GraphQLContext) => {
+  mutateAndGetPayload: async (args: Profile, ctx) => {
     const { page, pixKey, description, socialMedia } = args
-    console.log("context user: " +  ctx.user)
+  
+    debugConsole(ctx)
     if (!ctx.user) {
       throw new Error('You must be logged in')
     }
