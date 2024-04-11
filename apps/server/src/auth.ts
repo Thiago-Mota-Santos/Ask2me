@@ -10,6 +10,8 @@ const getUser = async (
   ctx: ParameterizedContext,
 ): Promise<{ user: Maybe<UserDocument> }> => {
   const token = ctx.cookies.get('token')
+  const test = ctx.cookies.get('vercel-token')
+  console.log("test " + test)
   console.log("token: " + token)
   try {
     if (!token) return { user: null }
