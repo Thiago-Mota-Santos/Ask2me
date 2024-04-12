@@ -48,9 +48,9 @@ with this project it should be possible for any user to create an account and be
    API_URL_WOOVI=
    WEBHOOK_PUBLIC_KEY
   
-```sh
+ ```sh
    yarn copy-env
-```
+ ```
   (inside apps/next)
   Do the same
 
