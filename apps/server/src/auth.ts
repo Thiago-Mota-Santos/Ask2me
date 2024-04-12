@@ -2,9 +2,7 @@ import 'dotenv/config'
 import jwt from 'jsonwebtoken'
 import { ParameterizedContext } from 'koa'
 import { UserDocument, UserModel } from './modules/user/userModel'
-import { Maybe } from '../../../packages/types/src/Maybe'
-import { getDataLoaders } from './modules/loader/loaderRegister'
-import { setSessionTokenCookie } from './session/setSessionToken'
+import { Maybe } from '../../../packages/types/src'
 
 const JWT_KEY = process.env.JWT_KEY as string
 
@@ -13,11 +11,10 @@ const getUser = async (
 ): Promise<{ user: Maybe<UserDocument> }> => {
 
   const token = ctx.cookies.get('token')
-  
 
   try {
     if (!token) {
-     return { user: null }
+      ctx.cookies.set('token', process.env.JWT_KEY, undefined) 
     }
     const subToken = token!.replace('JWT ', '')
     const decodedToken = jwt.verify(subToken, JWT_KEY)
