@@ -74,6 +74,7 @@ async function networkFetch(
   // throw an error to indicate to the developer what went wrong.
   if (Array.isArray(json.errors)) {
     console.log(json.errors)
+
     throw new Error(
       `Error fetching GraphQL query '${
         params.name
@@ -82,9 +83,6 @@ async function networkFetch(
       )}`,
     )
   }
-
-  // Otherwise, return the full payload.
-  return json
 }
 
 export async function getPreloadedQuery(
@@ -92,10 +90,15 @@ export async function getPreloadedQuery(
   variables: Variables,
   headers: HeadersInit,
 ) {
-  const response = await networkFetch(params, variables, headers)
-  return {
-    params,
-    variables,
-    response,
+  try {
+    const response = await networkFetch(params, variables, headers);
+    return {
+      params,
+      variables,
+      response,
+    };
+  } catch (error) {
+    console.error("Erro ao carregar o perfil:", error);
+    return null; 
   }
 }
