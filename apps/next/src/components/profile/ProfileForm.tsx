@@ -46,7 +46,13 @@ export default function ProfileForm () {
         description: form.description,
         socialMedia: form.socialMedia
       },
-      onError() {
+      onError(e) {
+        if(e.message.includes('E11000 duplicate key error')) {
+          toast.error("Erro ao cadastrar perfil", {
+            description: "A página já está em uso. Escolha outro nome.",
+          });
+          return
+        }
         toast.error("Algo deu errado :(", {
           description: "Tente novamente"
       })
@@ -62,7 +68,6 @@ export default function ProfileForm () {
       },
     });
   }
-
   return (
     <div className="p-4 bg-white rounded-t-2xl shadow-lg overflow-hidden">
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -83,7 +88,6 @@ export default function ProfileForm () {
               required
               {...register("page")}
             />
-            <p className="text-sm mt-2">Saia do campo para verificar.</p>
           </div>
           <div className="flex gap-2">
             <Input
@@ -94,7 +98,7 @@ export default function ProfileForm () {
               required
               {...register("pixKey")}
             />
-            <button className="border rounded border-gray-300 p-2">
+            {/* <button className="border rounded border-gray-300 p-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -103,7 +107,7 @@ export default function ProfileForm () {
                 viewBox="0 0 256 256">
                 <path d="M200,32H163.74a47.92,47.92,0,0,0-71.48,0H56A16,16,0,0,0,40,48V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V48A16,16,0,0,0,200,32Zm-72,0a32,32,0,0,1,32,32H96A32,32,0,0,1,128,32Zm72,184H56V48H82.75A47.93,47.93,0,0,0,80,64v8a8,8,0,0,0,8,8h80a8,8,0,0,0,8-8V64a47.93,47.93,0,0,0-2.75-16H200Z"></path>
               </svg>
-            </button>
+            </button> */}
           </div>
           <textarea
             rows={3}
