@@ -10,8 +10,6 @@ import {
     MenubarTrigger,
     Text 
 } from '@repo/ui/index'
-import { AuthContext } from '@/context/AuthContext'
-import { removeToken } from '@/utils/getToken'
 import { useLogout } from '@/hooks/useLogout'
 
 export default function AvatarMenuBar() {
