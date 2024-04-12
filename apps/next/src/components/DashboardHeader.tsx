@@ -22,7 +22,6 @@ export default function DashboardHeader({ hasArrow = false }: HeaderProps) {
       </button>
 
       <div className="ml-0 mb-4 border-b-yellow-500 border-b-4 border-solid md:ml-24">
-        <Link href="/dashboard">
           <Image
             className="align-middle mb-1"
             src="/asktome.png"
@@ -30,7 +29,6 @@ export default function DashboardHeader({ hasArrow = false }: HeaderProps) {
             height={60}
             alt="ask logo"
           />
-        </Link>
       </div>
  
       <Flex gap="1" ml="3" align="start">
