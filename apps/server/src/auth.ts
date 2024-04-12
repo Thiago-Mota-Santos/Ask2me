@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
-import { ParameterizedContext, ParameterizedContext } from 'koa'
+import { ParameterizedContext } from 'koa'
 import { UserDocument, UserModel } from './modules/user/userModel'
 import { Maybe } from '../../../packages/types/src/Maybe'
 import { getDataLoaders } from './modules/loader/loaderRegister'
@@ -17,7 +17,7 @@ const getUser = async (
 
   try {
     if (!token) {
-     await setSessionTokenCookie(ctx, 'token', null)
+     return { user: null }
     }
     const subToken = token!.replace('JWT ', '')
     const decodedToken = jwt.verify(subToken, JWT_KEY)
