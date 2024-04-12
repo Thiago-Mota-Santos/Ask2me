@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "yarn relay && next start",
     "lint": "next lint",
     "copy-env": "cp .env.example .env",
     "relay": "node scripts/generateArtifactDirectory.ts && relay-compiler"
