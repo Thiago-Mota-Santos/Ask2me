@@ -14,9 +14,12 @@ const getUser = async (
 
   try {
     if (!token) {
+      console.log("ctx is called")
       ctx.cookies.set('token', process.env.JWT_KEY, undefined) 
+      console.log("ctx is ok")
     }
     const subToken = token!.replace('JWT ', '')
+    console.log(subToken)
     const decodedToken = jwt.verify(subToken, JWT_KEY)
     const decodedId = decodedToken as { id: string }
     
