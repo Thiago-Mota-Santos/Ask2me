@@ -1,10 +1,10 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { successField } from '@entria/graphql-mongo-helpers'
-import { generateJwtToken } from '../../../auth'
 import { UserModel } from '../userModel'
 import { UserType } from '../userType'
 import { UserLoader } from '../userLoader'
+import { generateUserToken, setSessionTokenCookie } from '../../../session/setSessionToken'
 
 const userRegisterMutation = mutationWithClientMutationId({
   name: 'UserRegister',
@@ -15,7 +15,7 @@ const userRegisterMutation = mutationWithClientMutationId({
     password: { type: new GraphQLNonNull(GraphQLString) },
   },
 
-  mutateAndGetPayload: async ({ username, email, password, ...rest }) => {
+  mutateAndGetPayload: async ({ username, email, password, ...rest }, ctx) => {
     const hasUser =
       (await UserModel.countDocuments({ email: email.trim() })) > 0
 
@@ -30,7 +30,10 @@ const userRegisterMutation = mutationWithClientMutationId({
       ...rest,
     }).save()
 
-    const token = generateJwtToken(user)
+    const token = generateUserToken(user)
+    ctx.ctx.cookies.set('token', `JWT ${token}`, null)
+   
+    await setSessionTokenCookie(ctx, 'token', `JWT ${token}`);
 
     return {
       token,

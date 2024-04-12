@@ -1,26 +1,33 @@
 import 'dotenv/config'
 import jwt from 'jsonwebtoken'
-import { ParameterizedContext } from 'koa'
+import { ParameterizedContext, ParameterizedContext } from 'koa'
 import { UserDocument, UserModel } from './modules/user/userModel'
 import { Maybe } from '../../../packages/types/src/Maybe'
+import { getDataLoaders } from './modules/loader/loaderRegister'
+import { setSessionTokenCookie } from './session/setSessionToken'
 
 const JWT_KEY = process.env.JWT_KEY as string
 
 const getUser = async (
   ctx: ParameterizedContext,
 ): Promise<{ user: Maybe<UserDocument> }> => {
+
   const token = ctx.cookies.get('token')
-  const test = ctx.cookies.get('vercel-token')
-  console.log("token: " + token)
+  
+
   try {
-    if (!token) return { user: null }
-    const subToken = token.replace('JWT%20', '')
+    if (!token) {
+     await setSessionTokenCookie(ctx, 'token', null)
+    }
+    const subToken = token!.replace('JWT ', '')
     const decodedToken = jwt.verify(subToken, JWT_KEY)
     const decodedId = decodedToken as { id: string }
-    console.log(decodedId)
+    
     const user = await UserModel.findOne({ _id: decodedId.id })
+    
     return { user }
   } catch (err) {
+    
     return { user: null }
   }
 }
