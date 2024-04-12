@@ -54,7 +54,7 @@ with this project it should be possible for any user to create an account and be
   (inside apps/next)
   Do the same
 
-4. Run the app:
+5. Run the app:
    (in the root (/))
    ```sh
    yarn dev 
@@ -74,7 +74,7 @@ with this project it should be possible for any user to create an account and be
 ----------------
 deploy:
 
-- [x] - vercel (yes, back and front) (how to deploy server apps using vercel)[https://dev.to/thiagomotasantos/a-different-way-to-deploy-a-server-3oo8]
+- [x] - vercel (yes, back and front) [how to deploy server apps using vercel](https://dev.to/thiagomotasantos/a-different-way-to-deploy-a-server-3oo8)
 
 
 ### Apps and Packages
