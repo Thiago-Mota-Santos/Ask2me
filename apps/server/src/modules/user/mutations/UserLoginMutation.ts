@@ -1,10 +1,10 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { successField } from '@entria/graphql-mongo-helpers'
-import { generateJwtToken } from '../../../auth'
 import { UserLoader } from '../userLoader'
 import { UserModel } from '../userModel'
 import { UserType } from '../userType'
+import { generateUserToken } from '../../../session/setSessionToken'
 
 interface UserLogin {
   email: string
@@ -21,7 +21,7 @@ const userLoginMutation = mutationWithClientMutationId({
       type: new GraphQLNonNull(GraphQLString),
     },
   },
-  mutateAndGetPayload: async (args: UserLogin) => {
+  mutateAndGetPayload: async (args: UserLogin, ctx) => {
     const { email, password } = {
       password: args.password.trim(),
       email: args.email.trim().toLowerCase(),
@@ -37,8 +37,10 @@ const userLoginMutation = mutationWithClientMutationId({
     if (!passwordIsCorrect) {
       throw new Error('Password is incorrect!')
     }
-    const token = generateJwtToken(user._id)
 
+    const token = generateUserToken(user)
+    ctx.ctx.cookies.set('token', `JWT ${token}`, null)
+    
     return {
       id: user._id,
       token,
