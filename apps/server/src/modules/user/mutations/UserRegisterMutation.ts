@@ -4,7 +4,7 @@ import { successField } from '@entria/graphql-mongo-helpers'
 import { UserModel } from '../userModel'
 import { UserType } from '../userType'
 import { UserLoader } from '../userLoader'
-import { generateUserToken, setSessionTokenCookie } from '../../../session/setSessionToken'
+import { generateUserToken } from '../../../session/setSessionToken'
 
 const userRegisterMutation = mutationWithClientMutationId({
   name: 'UserRegister',
@@ -32,8 +32,7 @@ const userRegisterMutation = mutationWithClientMutationId({
 
     const token = generateUserToken(user)
     ctx.ctx.cookies.set('token', `JWT ${token}`, null)
-   
-    await setSessionTokenCookie(ctx, 'token', `JWT ${token}`);
+    
 
     return {
       token,
