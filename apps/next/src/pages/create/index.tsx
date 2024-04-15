@@ -24,7 +24,7 @@ type CreateProps = {
 }
 
 export default function Create({ queryRefs }: CreateProps) {
-  const router = useRouter()
+  // const router = useRouter()
 
   if (!queryRefs) {
     return (
@@ -37,50 +37,50 @@ export default function Create({ queryRefs }: CreateProps) {
     )
   }
 
-  const data = usePreloadedQuery(Profile, queryRefs.createQuery);
-  const { profile } = data;
-  useEffect(() => {
-    if (profile) {
-      router.push("/");
-    }
-  }, [profile, router]);
+  // const data = usePreloadedQuery(Profile, queryRefs.createQuery);
+  // const { profile } = data;
+  // useEffect(() => {
+  //   if (profile) {
+  //     router.push("/");
+  //   }
+  // }, [profile, router]);
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const token = getCookie(ctx.req.headers);
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const token = getCookie(ctx.req.headers);
 
-  if (!token) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/auth/register',
-      },
-      props: {},
-    };
-  }
+//   if (!token) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: '/auth/register',
+//       },
+//       props: {},
+//     };
+//   }
   
-  try {
-    const preloadedQueries = {
-      createQuery: await getPreloadedQuery(createQuery, {}, token),
-    };
+//   try {
+//     const preloadedQueries = {
+//       createQuery: await getPreloadedQuery(createQuery, {}, token),
+//     };
 
-    const profile = preloadedQueries.createQuery;
+//     const profile = preloadedQueries.createQuery;
     
-    if (!profile) {
-      return {
-        props: {},
-      };
-    }
+//     if (!profile) {
+//       return {
+//         props: {},
+//       };
+//     }
 
-    return {
-      props: {
-        preloadedQueries,
-      },
-    };
-  } catch (error) {
-    console.error("Erro ao carregar o perfil:", error);
-    return {
-      props: {}, 
-    };
-  }
-};
+//     return {
+//       props: {
+//         preloadedQueries,
+//       },
+//     };
+//   } catch (error) {
+//     console.error("Erro ao carregar o perfil:", error);
+//     return {
+//       props: {}, 
+//     };
+//   }
+// }
