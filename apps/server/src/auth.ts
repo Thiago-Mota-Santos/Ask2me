@@ -15,7 +15,7 @@ const getUser = async (
   console.log("token: ", token)
   try {
     if (!token) {
-      ctx.cookies.set('token', process.env.JWT_KEY, undefined) 
+      ctx.cookies.set('token', process.env.JWT_KEY, { sameSite: 'none'}) 
     }
     const subToken = token!.replace('JWT ', '')
     console.log("subtoken: " + subToken)
