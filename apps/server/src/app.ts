@@ -20,14 +20,18 @@ const graphQlSettingsPerReq = async (
   _res: Response,
   ctx: ParameterizedContext,
 ): Promise<OptionsData> => {
-  const user = await getUser(ctx)
-  console.log("userrrr:  ", user)
+  const { user } = await getUser(ctx)
+  console.log(await getContext({
+    ctx,
+    user,
+  }))
+
   return {
     graphiql: true,
     schema,
     pretty: true,
     
-    context: getContext({
+    context: await getContext({
       ctx,
       user,
     }),
