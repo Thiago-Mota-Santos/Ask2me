@@ -8,12 +8,12 @@ interface ContextVars {
   user: Maybe<UserDocument>
 }
 
-export const getContext = ({ ctx, user }: ContextVars) => {
+export const getContext = async ({ ctx, user }: ContextVars) => {
   const dataloaders = getDataLoaders()
-
+ 
   return {
     ctx,
     dataloaders,
-    user: user?.user,
+    user,
   } as const
 }
