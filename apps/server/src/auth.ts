@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import { ParameterizedContext } from 'koa'
 import { UserDocument, UserModel } from './modules/user/userModel'
 import { Maybe } from '../../../packages/types/src'
+import { debugConsole } from '../test/debubConsole'
 
 const JWT_KEY = process.env.JWT_KEY as string
 
@@ -11,7 +12,7 @@ const getUser = async (
 ): Promise<{ user: Maybe<UserDocument> }> => {
 
   const token = ctx.cookies.get('token')
-
+  console.log("token: ", token)
   try {
     if (!token) {
       ctx.cookies.set('token', process.env.JWT_KEY, undefined) 
@@ -20,9 +21,9 @@ const getUser = async (
     console.log("subtoken: " + subToken)
     const decodedToken = jwt.verify(subToken, JWT_KEY)
     const decodedId = decodedToken as { id: string }
-    
+    debugConsole(decodedId)
     const user = await UserModel.findOne({ _id: decodedId.id })
-    
+    console.log("user: " + user)
     return { user }
   } catch (err) {
     
