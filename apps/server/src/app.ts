@@ -21,7 +21,7 @@ const graphQlSettingsPerReq = async (
   ctx: ParameterizedContext,
 ): Promise<OptionsData> => {
   const { user } = await getUser(ctx)
-  
+  console.log("user:  ", user)
   return {
     graphiql: {
       headerEditorEnabled: true,
