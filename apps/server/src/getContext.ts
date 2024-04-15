@@ -14,6 +14,6 @@ export const getContext = ({ ctx, user }: ContextVars) => {
   return {
     ctx,
     dataloaders,
-    user,
+    user: user?.user,
   } as const
 }
