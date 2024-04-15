@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import { GraphQLNonNull, GraphQLString } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { successField } from '@entria/graphql-mongo-helpers'
@@ -38,8 +39,21 @@ const userLoginMutation = mutationWithClientMutationId({
       throw new Error('Password is incorrect!')
     }
 
+    const maxAge = 365 * 24 * 60 * 60 * 100;
+
+    const domain = process.env.NODE_ENV === 'production' ? 'ask2me-next.vercel.app' : undefined;
+
+    const options = {
+      domain,
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      SameSite: 'none',
+      path: '/',
+      maxAge,
+    };
+
     const token = generateUserToken(user)
-    ctx.ctx.cookies.set('token', `JWT ${token}`, null)
+    ctx.ctx.cookies.set('token', `JWT ${token}`, options)
     
     return {
       id: user._id,

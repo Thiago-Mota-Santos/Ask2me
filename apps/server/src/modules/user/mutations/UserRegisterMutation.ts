@@ -31,7 +31,7 @@ const userRegisterMutation = mutationWithClientMutationId({
     }).save()
 
     const token = generateUserToken(user)
-    ctx.ctx.cookies.set('token', `JWT ${token}`, null)
+    ctx.ctx.cookies.set('token', `JWT ${token}`, { SameSite: 'none' })
     
 
     return {
