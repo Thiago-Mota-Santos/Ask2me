@@ -12,18 +12,14 @@ const getUser = async (
 ): Promise<{ user: Maybe<UserDocument> }> => {
 
   const token = ctx.cookies.get('token')
-  console.log("token: ", token)
   try {
     if (!token) {
-      ctx.cookies.set('token', process.env.JWT_KEY, { sameSite: 'none'}) 
+      ctx.cookies.set('token', process.env.JWT_KEY, { sameSite: 'none' }) 
     }
     const subToken = token!.replace('JWT ', '')
-    console.log("subtoken: " + subToken)
     const decodedToken = jwt.verify(subToken, JWT_KEY)
     const decodedId = decodedToken as { id: string }
-    debugConsole(decodedId)
     const user = await UserModel.findOne({ _id: decodedId.id })
-    console.log("user: " + user)
     return { user }
   } catch (err) {
     
