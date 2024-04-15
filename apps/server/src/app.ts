@@ -21,17 +21,20 @@ const graphQlSettingsPerReq = async (
   ctx: ParameterizedContext,
 ): Promise<OptionsData> => {
   const { user } = await getUser(ctx)
+  
   return {
     graphiql: {
       headerEditorEnabled: true,
-      shouldPersistHeaders: true,
+      shouldPersistHeaders: false,
     },
     schema,
     pretty: true,
+    
     context: getContext({
       ctx,
       user,
     }),
+   
     customFormatErrorFn: ({ message, locations, stack }) => {
       /* eslint-disable no-console */
       console.log(message)
