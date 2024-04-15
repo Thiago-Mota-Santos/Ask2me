@@ -30,19 +30,17 @@ const profile: GraphQLFieldConfig<any, any, any> = {
     const profileId = user._id; 
 
     if (!Types.ObjectId.isValid(profileId)) {
-      throw new Error('Invalid profileId');
+      return null
     }
 
     const profile = await ProfileModel.findOne({ profileId });
     
     if (!profile) {
-      throw new Error('Profile not found');
+      return null
     }
 
     const loadedProfile = await ProfileLoader.load(context, profile._id);
-    if (!loadedProfile) {
-      throw new Error('Profile not found');
-    }
+    
 
     return loadedProfile;
   },
@@ -68,7 +66,7 @@ const questions: GraphQLFieldConfig<any, any, any> = {
   const loadedQuestions = await QuestionLoader.loadAll(context, argsQuestion);
 
     if (!loadedQuestions) {
-      throw new Error('No questions found for this profile');
+      return null;
     }
 
     return loadedQuestions;
