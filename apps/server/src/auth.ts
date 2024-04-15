@@ -19,10 +19,11 @@ const getUser = async (
     const subToken = token!.replace('JWT ', '')
     const decodedToken = jwt.verify(subToken, JWT_KEY)
     const decodedId = decodedToken as { id: string }
+    console.log("decoded token: ", decodedId)
     const user = await UserModel.findOne({ _id: decodedId.id })
+    console.log("User before return : ", user)
     return { user }
   } catch (err) {
-    
     return { user: null }
   }
 }
