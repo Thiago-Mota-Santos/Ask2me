@@ -17,7 +17,7 @@ type HomeProps = {
 
 const Profile = graphql`
   query pagesQuery {
-    # ...ProfileInfo_profile
+    ...ProfileInfo_profile
     ...QuestionList
   } 
 `;
@@ -34,7 +34,7 @@ const Home: NextPageWithLayout<HomeProps> = ({ queryRefs }) => {
       <DashboardHeader hasArrow />
       <div className="flex items-center mt-8 justify-center">
         <Card className="w-[800px] bg-gray-100">
-          {/* <ProfileInfo profile={data} /> */}
+          <ProfileInfo profile={data} />
           <Questionlist questions={data} /> 
         </Card>
       </div>
@@ -56,6 +56,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   }
 
   const profile = await getPreloadedQuery(pageQuery, {}, token)
+
   // TODO: ever profile doesn't exist, profile return data, how to make this redirect correctly?
   if(!profile){
     return {
