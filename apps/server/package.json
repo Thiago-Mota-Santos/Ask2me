@@ -12,7 +12,7 @@
     "fixture:profile": "tsx src/modules/Profile/fixture/createProfile.ts",
     "qrcode": "tsx scripts/qrcodePost.ts",
     "charge": "tsx scripts/chargePostRun.ts",
-    "build": "tsup src"
+    "build": "rm -rf dist && tsup src"
   },
   "dependencies": {
     "@entria/graphql-mongo-helpers": "^1.1.2",
