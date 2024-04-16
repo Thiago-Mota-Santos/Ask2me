@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { connectDatabase } from './database'
 import { createServer } from 'http'
-import { app } from './app'
+import app from './newApp'
 (async () => {
   await connectDatabase()
   const PORT = process.env.PORT as unknown as number || 8080
