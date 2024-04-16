@@ -15,9 +15,11 @@ const getUser = async (
   try {
     if (!token) {
       ctx.cookies.set('token', process.env.JWT_KEY, { sameSite: 'none' }) 
+      return { user: null }
     }
-    const subToken = token!.replace('JWT ', '')
-    const decodedToken = jwt.verify(subToken, JWT_KEY)
+    const subToken = token?.replace('JWT ', '')
+    console.log(subToken)
+    const decodedToken = jwt.verify(subToken!, JWT_KEY)
     const decodedId = decodedToken as { id: string }
     console.log("decoded token: ", decodedId)
     const user = await UserModel.findOne({ _id: decodedId.id })
@@ -25,6 +27,7 @@ const getUser = async (
     return { user }
   } catch (err) {
     console.log("catch has triggered")
+    console.log(err)
     return { user: null }
   }
 }
