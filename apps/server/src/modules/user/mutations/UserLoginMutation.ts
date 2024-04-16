@@ -5,7 +5,7 @@ import { successField } from '@entria/graphql-mongo-helpers'
 import { UserLoader } from '../userLoader'
 import { UserModel } from '../userModel'
 import { UserType } from '../userType'
-import { generateUserToken } from '../../../session/setSessionToken'
+import { generateJwtToken } from '../../../auth'
 
 interface UserLogin {
   email: string
@@ -52,7 +52,7 @@ const userLoginMutation = mutationWithClientMutationId({
       maxAge,
     };
 
-    const token = generateUserToken(user)
+    const token = generateJwtToken(user)
     ctx.ctx.cookies.set('token', `JWT ${token}`, options)
     
     return {
