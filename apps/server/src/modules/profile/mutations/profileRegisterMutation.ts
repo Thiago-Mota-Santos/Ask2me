@@ -29,7 +29,7 @@ const profileRegisterMutation = mutationWithClientMutationId({
   mutateAndGetPayload: async (args: Profile, ctx) => {
     const { page, pixKey, description, socialMedia } = args
   
-    debugConsole(ctx.user)
+    debugConsole(ctx)
     if (!ctx.user) {
       throw new Error('You must be logged in')
     }
