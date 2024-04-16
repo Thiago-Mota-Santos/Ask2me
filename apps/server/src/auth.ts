@@ -24,7 +24,8 @@ const getUser = async (
   const verifyTokenAndFindUser = async () => {
     decodedId = jwt.verify(subToken || token, JWT_KEY) as { id: string };
     user = await UserModel.findOne({ _id: decodedId.id });
-    console.log(user)
+    console.log("decodedId: " + decodedId)
+    console.log("user: " + user)
   };
 
   await verifyTokenAndFindUser().catch(() => {});
