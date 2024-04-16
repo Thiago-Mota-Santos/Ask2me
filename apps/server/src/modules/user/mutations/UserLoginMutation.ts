@@ -6,6 +6,7 @@ import { UserLoader } from '../userLoader'
 import { UserModel } from '../userModel'
 import { UserType } from '../userType'
 import { generateJwtToken } from '../../../auth'
+import { generateUserToken } from '../../../session/setSessionToken'
 
 interface UserLogin {
   email: string
@@ -52,7 +53,7 @@ const userLoginMutation = mutationWithClientMutationId({
       maxAge,
     };
 
-    const token = generateJwtToken(user)
+    const token = generateUserToken(user)
     ctx.ctx.cookies.set('token', `JWT ${token}`, options)
     
     return {
