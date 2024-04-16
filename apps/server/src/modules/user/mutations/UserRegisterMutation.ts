@@ -5,6 +5,7 @@ import { UserModel } from '../userModel'
 import { UserType } from '../userType'
 import { UserLoader } from '../userLoader'
 import { generateUserToken } from '../../../session/setSessionToken'
+import { generateJwtToken } from '../../../auth'
 
 const userRegisterMutation = mutationWithClientMutationId({
   name: 'UserRegister',
@@ -30,7 +31,7 @@ const userRegisterMutation = mutationWithClientMutationId({
       ...rest,
     }).save()
 
-    const token = generateUserToken(user)
+    const token = generateJwtToken(user)
     ctx.ctx.cookies.set('token', `JWT ${token}`, { SameSite: 'none' })
     
 
