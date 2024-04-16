@@ -35,6 +35,8 @@ router.all(
 
 router.all('/graphql', async ctx => {
   const { user } = await getUser(ctx);
+ 
+  console.log("start : ", user)
 
   const request = {
     body: ctx.request.body,
@@ -61,6 +63,8 @@ router.all('/graphql', async ctx => {
         });
       },
     });
+
+    console.log(result)
 
     ctx.respond = false;
     sendResult(result, ctx.res);
