@@ -31,8 +31,22 @@ const userRegisterMutation = mutationWithClientMutationId({
       ...rest,
     }).save()
 
+    const maxAge = 365 * 24 * 60 * 60 * 100
+
+    const domain = process.env.NODE_ENV === 'production' ? 'ask2me-next.vercel.app' : undefined;
+
+    const options = {
+      domain,
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== 'development',
+      SameSite: 'none',
+      path: '/',
+      maxAge,
+    };
+
+
     const token = generateUserToken(user)
-    ctx.ctx.cookies.set('token', `JWT ${token}`, { SameSite: 'none' })
+    ctx.ctx.cookies.set('token', `JWT ${token}`, options)
     
 
     return {
