@@ -38,7 +38,7 @@ const userRegisterMutation = mutationWithClientMutationId({
     const options = {
       domain,
       httpOnly: true,
-      secure: process.env.NODE_ENV !== 'development',
+      secure: false,
       SameSite: 'none',
       path: '/',
       maxAge,
