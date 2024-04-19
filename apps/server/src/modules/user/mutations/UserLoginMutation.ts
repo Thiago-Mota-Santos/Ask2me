@@ -47,14 +47,14 @@ const userLoginMutation = mutationWithClientMutationId({
     const options = {
       domain,
       httpOnly: true,
-      secure: process.env.NODE_ENV !== 'development',
+      secure: false,
       SameSite: 'none',
       path: '/',
       maxAge,
     };
 
     const token = generateUserToken(user)
-    ctx.ctx.cookies.set('token', `JWT ${token}`, options)
+    await ctx.ctx.cookies.set('token', `JWT ${token}`, options)
     
     return {
       id: user._id,
